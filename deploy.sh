@@ -3,4 +3,4 @@
 set -eu
 HOST="${DEPLOY_HOST:-swift@100.114.149.99}"
 git push
-ssh "$HOST" 'git -C /srv/www/brycehart.dev pull --ff-only'
+ssh "$HOST" 'git -C /var/www/brycehart.dev pull --ff-only'
