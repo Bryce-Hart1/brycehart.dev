@@ -1,0 +1,542 @@
+/* ==========================================================================
+   Bryce Hart — personal site
+   Plain CSS, no build step. Edit and refresh.
+
+   Layout of this file:
+     1. Tokens (colors, type, spacing)  <- change these to restyle the whole site
+     2. Reset & base
+     3. Layout primitives
+     4. Header / nav
+     5. Hero
+     6. Sections
+     7. Project cards
+     8. About / contact
+     9. Footer
+    10. Motion & print
+   ========================================================================== */
+
+
+/* 1. Tokens ---------------------------------------------------------------- */
+
+:root {
+  /* Earthy palette. Warm paper, umber ink, terracotta accent, moss for the
+     status dot. Every hue is warm — nothing here is a neutral grey. */
+  --bg:            #faf6f0;  /* warm paper   */
+  --bg-alt:        #f2ebe1;  /* sand         */
+  --surface:       #fffdfa;  /* raised card  */
+  --border:        #e5dbcc;
+  --border-strong: #cbbca7;
+
+  --text:          #2c2418;  /* dark umber   */
+  --text-muted:    #6b5d4b;  /* walnut       */
+  --text-faint:    #786954;  /* driftwood — as light as it can go and still
+                                clear 4.5:1 on --bg-alt, the worst case  */
+
+  --accent:        #9a5b34;  /* terracotta   */
+  --accent-hover:  #7d4726;  /* burnt sienna */
+
+  --success:       #5b7a4a;  /* moss         */
+
+  /* Type */
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+
+  /* Spacing scale */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-24: 6rem;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* Shadows are tinted with the umber from --text, never pure black. Pure black
+     over warm paper reads as grey smudge. */
+  --shadow: 0 1px 2px rgb(44 36 24 / 0.05), 0 4px 16px -6px rgb(44 36 24 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(44 36 24 / 0.06), 0 12px 32px -10px rgb(44 36 24 / 0.20);
+
+  --measure: 68ch;   /* comfortable reading width */
+  --page: 1080px;    /* max content width */
+}
+
+/* The page ships one palette, always. Tell the browser so it doesn't render form
+   controls and scrollbars in dark chrome for visitors whose OS is set to dark. */
+:root { color-scheme: light; }
+
+
+/* 2. Reset & base ---------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;   /* so anchors clear the sticky header */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+a { color: inherit; }
+
+svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: -100%;
+  z-index: 100;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  text-decoration: none;
+}
+.skip-link:focus { top: var(--sp-4); }
+
+
+/* 3. Layout primitives ----------------------------------------------------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--sp-6);
+}
+
+.wrap--narrow { max-width: 760px; }
+
+
+/* 4. Header / nav ---------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.site-header[data-scrolled] { border-bottom-color: var(--border); }
+
+.nav {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding: var(--sp-4) var(--sp-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-right: auto;
+}
+
+.nav__mark {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--sp-6);
+  list-style: none;
+  padding: 0;
+  font-size: 0.925rem;
+}
+
+.nav__links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.nav__links a:hover { color: var(--text); }
+
+@media (max-width: 34rem) {
+  .nav__name { display: none; }    /* the "BH" mark carries it on narrow screens */
+  .nav__links { gap: var(--sp-4); }
+}
+
+
+/* 5. Hero ------------------------------------------------------------------ */
+
+.hero {
+  padding-block: clamp(var(--sp-16), 12vw, var(--sp-24)) var(--sp-16);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+  padding: var(--sp-1) var(--sp-3) var(--sp-1) var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
+}
+
+.hero__title {
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  max-width: 20ch;
+  margin-bottom: var(--sp-6);
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero__lede {
+  max-width: 58ch;
+  margin-bottom: var(--sp-8);
+  color: var(--text-muted);
+  font-size: clamp(1.05rem, 1.6vw, 1.1875rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-6);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.15s ease,
+              border-color 0.15s ease, background-color 0.15s ease;
+}
+.btn:hover {
+  border-color: var(--text-faint);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+.btn svg { width: 1rem; height: 1rem; }
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn--primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+
+/* 6. Sections -------------------------------------------------------------- */
+
+.section { padding-block: var(--sp-16); }
+
+.section--alt {
+  background: var(--bg-alt);
+  border-block: 1px solid var(--border);
+}
+
+.section__head { margin-bottom: var(--sp-12); }
+
+.section__title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: var(--sp-3);
+}
+
+.section__sub {
+  max-width: var(--measure);
+  color: var(--text-muted);
+}
+
+.section__foot {
+  margin-top: var(--sp-12);
+  text-align: center;
+}
+
+
+/* 7. Project cards --------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--sp-6);
+}
+
+/* --page caps the grid at two columns, so an odd card count would leave the
+   last one stranded at half width. Let it take the whole row instead. */
+.grid > .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lift);
+}
+
+.card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+
+.card__title { font-size: 1.1875rem; }
+
+.card__year {
+  flex-shrink: 0;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.card__body {
+  margin-bottom: var(--sp-6);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+  margin-top: auto;         /* pins links to the bottom of every card */
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.link:hover { color: var(--accent-hover); }
+.link:hover svg { transform: translate(1px, -1px); }
+.link svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  transition: transform 0.15s ease;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 0.15rem var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.tags--lg li {
+  padding: var(--sp-1) var(--sp-3);
+  background: var(--surface);
+  font-size: 0.8125rem;
+}
+
+
+/* 8. About / contact ------------------------------------------------------- */
+
+.prose {
+  max-width: var(--measure);
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+}
+.prose p + p { margin-top: var(--sp-4); }
+
+.toolbox { margin-top: var(--sp-12); }
+
+.toolbox__title {
+  margin-bottom: var(--sp-4);
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact {
+  display: grid;
+  gap: var(--sp-3);
+  padding: 0;
+  list-style: none;
+}
+
+.contact__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+.contact__item:hover {
+  border-color: var(--border-strong);
+  transform: translateX(2px);
+}
+
+.contact__label {
+  flex-shrink: 0;
+  width: 5.5rem;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact__value {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 30rem) {
+  .contact__item { flex-direction: column; gap: var(--sp-1); }
+  .contact__label { width: auto; }
+}
+
+
+/* 9. Footer ---------------------------------------------------------------- */
+
+.site-footer {
+  padding-block: var(--sp-8);
+  border-top: 1px solid var(--border);
+  color: var(--text-faint);
+  font-size: 0.875rem;
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  justify-content: space-between;
+}
+
+.site-footer__meta { font-family: var(--font-mono); font-size: 0.8125rem; }
+
+
+/* 10. Motion & print ------------------------------------------------------- */
+
+/* Sections ease in as you scroll. main.js adds .is-visible via IntersectionObserver;
+   without JS the .reveal class is never applied, so content stays visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+@media print {
+  .site-header, .hero__actions { display: none; }
+  body { background: #fff; color: #000; }
+  .card { break-inside: avoid; border: 1px solid #ccc; }
+}

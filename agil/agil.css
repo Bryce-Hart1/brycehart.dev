@@ -1,0 +1,1166 @@
+/* ==========================================================================
+   Agil — product, privacy and support pages
+   Plain CSS, no build step. Self-contained: these pages do NOT load the
+   personal site's styles.css, because they wear Agil's identity, not
+   brycehart.dev's.
+
+   Palette is Agil's built-in "Classic" theme, lifted verbatim from
+   GymApp/Theme/AppTheme.swift:
+       light   accent #EA0F8B   bg #FCEEF6   surface #FFFFFF
+       dark    accent #FF4FB0   bg #130810   surface #211019
+   Classic is an *adaptive* theme in the app (it follows the system light/dark
+   setting), so these pages do the same via prefers-color-scheme.
+
+   Two colors are added that the app doesn't need. The app draws its pink on
+   large controls; a web page puts it under inline body links and small button
+   labels, where #EA0F8B lands at 4.2:1 on white — under the 4.5:1 floor. So:
+     --accent      the brand pink. Marks, rules, large type, decoration.
+     --accent-ink  a deeper pink for body-copy links      (6.7:1 on white)
+     --accent-btn  a deeper pink for solid button fills   (5.1:1 vs white)
+   In dark mode the pink is already light enough to carry text, so all three
+   collapse back to one value.
+
+   Type: the whole app runs on the system font's *monospaced* design
+   (AppFontDesign.monospaced is every built-in theme's default). Mono is the
+   brand here, so it carries the chrome — headings, nav, labels, buttons,
+   pills. Running prose stays in the system sans, because the privacy page is
+   1,500 words and mono at that length is a wall. The seam is deliberate.
+
+   Layout of this file:
+     1. Tokens
+     2. Reset & base
+     3. Layout primitives
+     4. Header / nav
+     5. Hero
+     6. Sections & cards
+     7. Prose (privacy / support long-form)
+     8. Buttons, pills, tags
+     9. Footer
+    10. Motion & print
+   ========================================================================== */
+
+
+/* 1. Tokens ---------------------------------------------------------------- */
+
+:root {
+  color-scheme: light dark;
+
+  --bg:            #FCEEF6;  /* Classic light background */
+  --bg-alt:        #F7E2EE;  /* one step down, for banded sections */
+  --surface:       #FFFFFF;  /* Classic light surface (cards) */
+  --border:        #F0D5E4;
+  --border-strong: #DFB4CE;
+
+  --text:          #1A0F17;  /* near-black plum, not grey */
+  --text-muted:    #6B4F60;
+  --text-faint:    #7E6072;  /* as light as it goes and still clears 4.5:1 on --bg-alt */
+
+  --accent:        #EA0F8B;  /* the logo pink */
+  --accent-ink:    #B3006B;  /* links in body copy */
+  --accent-btn:    #D40B7E;  /* solid fills carrying white text */
+  --on-accent:     #FFFFFF;
+
+  --shadow:      0 1px 2px rgb(26 15 23 / 0.05), 0 4px 16px -6px rgb(26 15 23 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(26 15 23 / 0.07), 0 12px 32px -10px rgb(26 15 23 / 0.22);
+
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-24: 6rem;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 22px;   /* iOS app-icon corner, for the mark */
+
+  --measure: 68ch;
+  --page: 1080px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:            #130810;  /* Classic dark background */
+    --bg-alt:        #1A0C16;
+    --surface:       #211019;  /* Classic dark surface */
+    --border:        #35202C;
+    --border-strong: #4E2E3F;
+
+    --text:          #F9EDF4;
+    --text-muted:    #CFAEC0;
+    --text-faint:    #B893A8;
+
+    --accent:        #FF4FB0;  /* Classic dark accent */
+    --accent-ink:    #FF4FB0;
+    --accent-btn:    #FF4FB0;
+    --on-accent:     #130810;  /* dark ink on the bright pink */
+
+    --shadow:      0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -6px rgb(0 0 0 / 0.6);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.5), 0 12px 32px -10px rgb(0 0 0 / 0.7);
+  }
+}
+
+
+/* 2. Reset & base ---------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* .btn's inline-flex would otherwise beat it */
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-mono);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+a { color: inherit; }
+img { max-width: 100%; height: auto; display: block; }
+
+svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: -100%;
+  z-index: 100;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.skip-link:focus { top: var(--sp-4); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* 3. Layout primitives ----------------------------------------------------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--sp-6);
+}
+.wrap--narrow { max-width: 760px; }
+
+.section {
+  padding-block: var(--sp-24);
+  border-top: 1px solid var(--border);
+}
+.section--alt { background: var(--bg-alt); }
+.section--tight { padding-block: var(--sp-16); }
+
+.section__head { margin-bottom: var(--sp-8); }
+
+.section__title {
+  font-size: clamp(1.35rem, 1.1rem + 1.1vw, 1.85rem);
+}
+
+.section__sub {
+  margin-top: var(--sp-3);
+  color: var(--text-muted);
+  max-width: var(--measure);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin-bottom: var(--sp-3);
+}
+
+
+/* 4. Header / nav ---------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.site-header[data-scrolled] { border-bottom-color: var(--border); }
+
+.nav {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding: var(--sp-3) var(--sp-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  margin-right: auto;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* The logo ships with its own near-black plate, so it needs no background of
+   its own — just the iOS icon radius so it reads as an app icon. */
+.nav__mark {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9px;
+  box-shadow: var(--shadow);
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--sp-5, 1.25rem);
+  list-style: none;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+.nav__links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  padding-block: var(--sp-1);
+  border-bottom: 1px solid transparent;
+}
+.nav__links a:hover { color: var(--text); border-bottom-color: var(--accent); }
+.nav__links a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); }
+
+.nav__home {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  text-decoration: none;
+}
+.nav__home:hover { color: var(--accent-ink); }
+
+
+/* 5. Hero ------------------------------------------------------------------ */
+
+.hero { padding-block: var(--sp-24) var(--sp-16); }
+
+.hero__mark {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+  margin-bottom: var(--sp-6);
+}
+
+.hero__title {
+  font-size: clamp(2.1rem, 1.5rem + 3vw, 3.4rem);
+  letter-spacing: -0.045em;
+}
+
+.hero__lede {
+  margin-top: var(--sp-5, 1.25rem);
+  max-width: 54ch;
+  font-size: clamp(1.02rem, 0.98rem + 0.3vw, 1.15rem);
+  color: var(--text-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-8);
+}
+
+/* Launch hero — the countdown. Full-viewport, centred, with a pink glow behind
+   it. The countdown itself is opt-in behind `.js-countdown` on <html>, which
+   agil-countdown.js adds; without it the written launch date is the fallback. */
+.launch {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  align-items: center;
+  min-height: calc(100svh - 3.5rem);
+  padding-block: var(--sp-16) var(--sp-24);
+  text-align: center;
+  background:
+    radial-gradient(60% 50% at 50% 38%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    var(--bg);
+}
+
+.launch__inner { display: flex; flex-direction: column; align-items: center; }
+.launch__mark { margin-inline: auto; }
+.launch__title { margin-top: var(--sp-6); text-wrap: balance; }
+.launch__lede { margin-inline: auto; text-wrap: pretty; }
+.launch__actions { justify-content: center; }
+
+.launch__date {
+  margin-top: var(--sp-6);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.launch__date time { color: var(--accent-ink); font-weight: 700; white-space: nowrap; }
+
+/* Decorative drifting blobs. anime moves them; CSS only places them. */
+.launch__orbs { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.launch__orb {
+  position: absolute;
+  width: 34vmax; height: 34vmax;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.12;
+  filter: blur(70px);
+}
+.launch__orb:nth-child(1) { top: -12vmax; left: -10vmax; }
+.launch__orb:nth-child(2) { bottom: -16vmax; right: -8vmax; opacity: 0.1; }
+.launch__orb:nth-child(3) { top: 30%; left: 55%; width: 20vmax; height: 20vmax; opacity: 0.08; }
+
+.launch__cue {
+  position: absolute;
+  bottom: var(--sp-6);
+  left: 50%;
+  translate: -50% 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  color: var(--text-faint);
+  animation: cue-bob 2.2s ease-in-out infinite;
+}
+.launch__cue:hover { color: var(--accent-ink); }
+.launch__cue svg {
+  width: 1.25rem; height: 1.25rem;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+@keyframes cue-bob { 50% { transform: translateY(6px); } }
+
+.countdown { display: none; }
+
+.js-countdown .countdown {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.5rem, 2vw, 1rem);
+  width: min(100%, 44rem);
+  margin-top: var(--sp-8);
+}
+
+.countdown__unit {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: clamp(0.9rem, 2.5vw, 1.5rem) var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+}
+
+.countdown__num {
+  display: flex;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 1rem + 6vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.countdown__unit--seconds .countdown__num { color: var(--accent-ink); }
+
+/* One digit = a window onto a vertical strip of 0–9 twice over. anime slides
+   the strip; the doubled strip is what lets a countdown wrap 0 → 9 while still
+   rolling in the same direction. */
+.digit {
+  display: block;
+  height: 1em;
+  width: 0.62em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent);
+          mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent);
+}
+.digit__strip { display: block; will-change: transform; }
+.digit__strip span { display: block; height: 1em; text-align: center; }
+
+.countdown__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.countdown__ring {
+  position: absolute;
+  inset: -1px;
+  border: 2px solid var(--accent);
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.countdown__burst {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  pointer-events: none;
+}
+.countdown__burst span {
+  position: absolute;
+  width: 9px; height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.countdown__burst span:nth-child(3n) { background: var(--accent-ink); border-radius: 50%; }
+.countdown__burst span:nth-child(4n) { background: var(--border-strong); }
+
+.launch[data-state="launched"] .countdown__unit { border-color: var(--accent); }
+
+@media (max-width: 30rem) {
+  .js-countdown .countdown { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Page title block on the legal/support pages — smaller than the product hero. */
+.page-head {
+  padding-block: var(--sp-16) var(--sp-8);
+}
+.page-head__title {
+  font-size: clamp(1.7rem, 1.3rem + 1.8vw, 2.4rem);
+  letter-spacing: -0.035em;
+}
+.page-head__meta {
+  margin-top: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+
+/* 6. Sections & cards ------------------------------------------------------ */
+
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow);
+}
+
+.card__title {
+  font-size: 1.02rem;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.card__body {
+  margin-top: var(--sp-3);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.card__body + .card__body { margin-top: var(--sp-3); }
+
+/* A single wide card used for the "no paywalls" claim and other pull-outs. */
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow);
+}
+.callout__title { font-size: 1.05rem; }
+.callout p { margin-top: var(--sp-3); color: var(--text-muted); }
+
+/* Screenshot frames. Empty until real captures land — the aspect ratio holds
+   the layout so dropping images in later doesn't reflow the page. */
+/* Columns are capped, not fluid: a phone frame is 9:19.5, so a 380px-wide
+   column would be 820px tall and the page would become a corridor. */
+.shots {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 230px));
+  justify-content: center;
+}
+
+.shot {
+  aspect-ratio: 9 / 19.5;          /* iPhone */
+  border-radius: 26px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.shot img { width: 100%; height: 100%; object-fit: cover; }
+.shot__placeholder {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-align: center;
+  padding: var(--sp-4);
+}
+
+/* Theme swatches — the six built-in themes, real hexes from AppTheme.swift. */
+.swatches {
+  display: grid;
+  gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  list-style: none;
+  padding: 0;
+}
+.swatch {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.swatch__chip {
+  height: 56px;
+  display: flex;
+}
+.swatch__chip span { flex: 1; }
+.swatch__chip span:nth-child(2) { flex: 0 0 34%; }
+.swatch__name {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: var(--sp-2) var(--sp-3);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* Two-column key/value list used for "system requirements" style facts. */
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--sp-2) var(--sp-6);
+  font-size: 0.95rem;
+}
+.facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  padding-top: 0.15rem;
+}
+.facts dd { margin: 0; color: var(--text); }
+
+@media (max-width: 32rem) {
+  .facts { grid-template-columns: 1fr; gap: 0; }
+  .facts dd { margin-bottom: var(--sp-4); }
+}
+
+
+/* 7. Prose ----------------------------------------------------------------- */
+
+.prose {
+  max-width: var(--measure);
+}
+.prose > * + * { margin-top: var(--sp-4); }
+
+.prose h2 {
+  margin-top: var(--sp-12);
+  font-size: 1.2rem;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+.prose h3 {
+  margin-top: var(--sp-8);
+  font-size: 0.98rem;
+  color: var(--text);
+}
+.prose h2 + p, .prose h3 + p { margin-top: var(--sp-3); }
+
+.prose p, .prose li { color: var(--text-muted); }
+.prose strong { color: var(--text); font-weight: 600; }
+
+.prose a {
+  color: var(--accent-ink);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover { text-decoration-thickness: 2px; }
+
+.prose ul, .prose ol {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--sp-2);
+}
+.prose li::marker { color: var(--accent); }
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  color: var(--text);
+}
+
+/* Table of contents at the top of the long pages. */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-5, 1.25rem) var(--sp-6);
+  box-shadow: var(--shadow);
+}
+.toc h2 {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 var(--sp-3);
+  border: 0;
+  padding: 0;
+}
+.toc ol {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.toc a { color: var(--text-muted); text-decoration: none; }
+.toc a:hover { color: var(--accent-ink); text-decoration: underline; }
+
+/* A short summary panel above the full policy — the version a person actually
+   reads. Never the only statement of a fact; the body below always repeats it. */
+.summary {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow);
+}
+.summary h2 {
+  font-size: 0.95rem;
+  margin: 0 0 var(--sp-4);
+  border: 0;
+  padding: 0;
+}
+.summary ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: var(--sp-2);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+.summary li::marker { color: var(--accent); }
+
+/* Support-page Q&A. <details> so the page is skimmable, but every answer is in
+   the DOM for search and for Ctrl-F. */
+.qa {
+  border-top: 1px solid var(--border);
+}
+.qa details {
+  border-bottom: 1px solid var(--border);
+  padding: var(--sp-4) 0;
+}
+.qa summary {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  gap: var(--sp-3);
+  align-items: baseline;
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::before {
+  content: "+";
+  color: var(--accent);
+  font-weight: 700;
+}
+.qa details[open] summary::before { content: "\2013"; }
+.qa details > *:not(summary) {
+  margin-top: var(--sp-3);
+  margin-left: 1.4rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: var(--measure);
+}
+.qa details > * + *:not(summary) { margin-top: var(--sp-3); }
+
+
+/* 8. Buttons, pills, tags -------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-5, 1.25rem);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lift); }
+.btn svg { width: 1.05em; height: 1.05em; }
+
+.btn--primary {
+  background: var(--accent-btn);
+  border-color: var(--accent-btn);
+  color: var(--on-accent);
+}
+.btn--primary:hover { background: var(--accent); border-color: var(--accent); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-3);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pill__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--sp-4);
+}
+.tags li {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.15rem var(--sp-3);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-ink);
+  text-underline-offset: 3px;
+}
+.link svg { width: 0.95em; height: 0.95em; }
+
+.card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}
+
+
+/* 9. Footer ---------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding-block: var(--sp-8);
+  font-size: 0.85rem;
+  color: var(--text-faint);
+}
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3) var(--sp-6);
+  align-items: center;
+}
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  list-style: none;
+  padding: 0;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.site-footer a { color: inherit; }
+.site-footer a:hover { color: var(--accent-ink); }
+
+
+/* Phone widths. App Review opens the support and privacy URLs on a phone as
+   often as not, so the first screen shouldn't be spent on navigation. */
+@media (max-width: 34rem) {
+  .wrap { padding-inline: var(--sp-4); }
+
+  .nav {
+    padding: var(--sp-3) var(--sp-4);
+    gap: var(--sp-2) var(--sp-4);
+    row-gap: var(--sp-2);
+  }
+  .nav__links { gap: var(--sp-4); font-size: 0.8rem; }
+  .nav__home { font-size: 0.75rem; }
+
+  .hero { padding-block: var(--sp-12) var(--sp-8); }
+  .hero__mark { width: 72px; height: 72px; }
+  .page-head { padding-block: var(--sp-8) var(--sp-4); }
+  .section { padding-block: var(--sp-16); }
+
+  .card, .callout, .summary, .toc { padding: var(--sp-5, 1.25rem); }
+}
+
+
+/* 10. Motion & print ------------------------------------------------------- */
+
+/* TRANSFORM ONLY — no opacity, deliberately.
+
+   `.reveal` is added by JS and cleared by an IntersectionObserver. If the
+   observer never fires, whatever `.reveal` sets is what the visitor is stuck
+   with. With `opacity: 0` in here, that means invisible content — and the
+   observer genuinely may not fire: background tabs, a restored scroll position
+   that puts the element outside every threshold, or a browser that ran the
+   script but throttled the callback. That is an unacceptable failure mode on
+   /agil/help/, which is the URL App Review opens to read the privacy policy.
+
+   Sliding 10px is the same effect minus the risk: worst case the section sits
+   10px low and nobody can tell. Same rule as the beat copy in agil-scroll.js —
+   never put readable content behind a JS-driven opacity. */
+.reveal {
+  transform: translateY(10px);
+  transition: transform 0.5s ease;
+}
+.reveal.is-visible { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { transform: none; }
+  .launch__cue { animation: none; }
+}
+
+@media print {
+  .site-header, .site-footer, .hero__actions, .toc { display: none; }
+  body { background: #fff; color: #000; }
+  .prose a::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+}
+
+
+/* 11. Tour stage ------------------------------------------------------------
+   The scroll-driven section on the product page: a phone that pins while the
+   talking points scroll past it, swapping its screenshot as each one arrives.
+
+   THE RULE THAT MAKES THIS SAFE: everything below is written so the DEFAULT
+   state — the one you get with no CSS class applied — is the fallback layout.
+   The pinned version is opt-in, gated behind `.js-stage` on <html>, which
+   agil-scroll.js adds only once it is confident it will work (anime loaded,
+   sticky supported, wide enough, tall enough, motion allowed). Every failure
+   mode therefore lands on a plain, complete, readable page rather than on a
+   half-applied effect. Nothing here hides content by default, so no script
+   failure can leave content hidden.
+   ========================================================================== */
+
+.stage {
+  padding-block: var(--sp-24);
+  border-top: 1px solid var(--border);
+}
+
+.stage__grid { display: grid; gap: var(--sp-12); }
+
+/* Fallback geometry: the same phone-frame strip the page used before, reusing
+   the .shot component wholesale. See the note on .shots — the columns are
+   capped rather than fluid because a 9:19.5 frame in a wide column becomes a
+   corridor. */
+.stage__frames {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 230px));
+  justify-content: center;
+}
+
+.stage__beats {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-12);
+  counter-reset: beat;
+}
+
+.beat__title { font-size: clamp(1.2rem, 1rem + 1vw, 1.6rem); }
+
+.beat__body {
+  margin-top: var(--sp-3);
+  color: var(--text-muted);
+  max-width: var(--measure);
+}
+
+.beat__note {
+  margin-top: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+/* The coin figure in the consistency beat. The number is written on every
+   animation frame while it counts up, so it MUST be able to change digit count
+   without reflowing the sentence around it: tabular figures, fixed min-width,
+   own formatting context. Without this the whole paragraph shimmers. */
+.beat__count {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 3ch;
+  text-align: right;
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+/* Chess rank ladder. The source SVGs are fill="currentColor", which an <img>
+   would resolve to its own black rather than inheriting ours — so they're
+   painted as masks instead: the box is the color, the file is the stencil.
+   That gives correct color in both light and dark with no inlined markup and
+   no duplicate assets. */
+.ladder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  align-items: center;
+  margin-top: var(--sp-6);
+  padding: 0;
+  list-style: none;
+}
+.ladder li {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--accent);
+  -webkit-mask: var(--piece) center / contain no-repeat;
+          mask: var(--piece) center / contain no-repeat;
+}
+.ladder li:first-child { background-color: var(--text-faint); }
+
+/* Ghost mark for the privacy beat — inline SVG (not an <img>) because its
+   stroke gets drawn on by anime.createDrawable, which needs the path in the
+   document. Stroked, not filled, which is what makes a draw-on legible. */
+.ghost-mark {
+  width: 3.5rem;
+  height: 3.5rem;
+  color: var(--accent);
+  margin-bottom: var(--sp-4);
+}
+.ghost-mark svg { width: 100%; height: 100%; }
+
+
+/* --- Pinned variant ------------------------------------------------------ */
+
+.js-stage .stage__grid {
+  grid-template-columns: minmax(240px, 34%) 1fr;
+  column-gap: var(--sp-16);
+  /* REQUIRED. Grid's default `stretch` makes the sticky child as tall as its
+     whole column, which leaves it no room to travel within — sticky then
+     computes correctly and still never appears to stick. This one line is the
+     difference between the effect working and silently doing nothing. */
+  align-items: start;
+}
+
+.js-stage .stage__phone {
+  position: sticky;
+  top: 0;
+  /* svh, not vh: on iOS Safari the collapsing toolbar changes vh mid-scroll,
+     which makes the pinned phone jump every time the scroll direction flips. */
+  height: 100svh;
+  display: grid;
+  place-items: center;
+}
+
+/* Stacked with grid-area rather than absolute positioning, so the stack still
+   derives its height from its tallest child. Adding a fourth screenshot needs
+   no size to be recalculated anywhere. */
+.js-stage .stage__frames {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: min(300px, 26vw);
+  max-height: 78svh;
+  justify-content: initial;
+  gap: 0;
+}
+.js-stage .stage__shot {
+  grid-area: 1 / 1;
+  opacity: 0;
+  will-change: opacity;   /* scoped to .js-stage: mobile never pays for this */
+}
+/* The honest pre-script state: frame one is the one already showing. */
+.js-stage .stage__shot:first-child { opacity: 1; }
+
+/* One screenful of scroll track per beat — no JS-computed heights, no magic
+   numbers. 88svh rather than 100 so the next headline is already peeking in
+   while the current one sits centred. */
+.js-stage .stage__beats { gap: 0; }
+.js-stage .beat {
+  min-height: 88svh;
+  display: grid;
+  align-content: center;
+}
+
+/* The active beat gets a rule down its left edge. Cheap, and it makes the
+   link between "this paragraph" and "that screenshot" explicit. */
+.js-stage .beat {
+  border-left: 2px solid transparent;
+  padding-left: var(--sp-6);
+  transition: border-color 0.35s ease;
+}
+.js-stage .beat[data-current] { border-left-color: var(--accent); }
+
+/* Scrubbed progress rail beside the phone. `position: sticky` on .stage__phone
+   already establishes the containing block, so the rail needs nothing else. */
+.stage__rail { display: none; }
+.js-stage .stage__rail {
+  display: block;
+  position: absolute;
+  inset-block: 14%;
+  right: var(--sp-4);
+  width: 2px;
+  background: var(--border);
+}
+.js-stage .stage__rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(var(--rail, 0));
+  transform-origin: top;
+}
+
+
+/* --- The merged help page ------------------------------------------------ */
+
+/* Inside the help page the policy is a section of a larger document, so its
+   headings demote one level (h2 -> h3) to keep the outline valid. These rules
+   give the demoted headings the visual weight the h2 styling used to carry, so
+   the policy still reads as a policy rather than as FAQ overflow. */
+.prose--policy h3 {
+  margin-top: var(--sp-12);
+  font-size: 1.05rem;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+.prose--policy h4 {
+  margin-top: var(--sp-6);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.prose--policy h3 + p,
+.prose--policy h4 + p { margin-top: var(--sp-3); }
+
+/* Nested entries in the help page's table of contents. */
+.toc ol ol {
+  margin-top: var(--sp-1);
+  padding-left: 1.1rem;
+  font-size: 0.8rem;
+}
+
+
+/* --- Stage: narrow and short viewports ----------------------------------- */
+
+/* Belt and braces. agil-scroll.js already refuses to add .js-stage below these
+   thresholds, but if the class is ever applied by hand (or left behind by a
+   failed teardown) these rules unwind the pin rather than trapping a phone in
+   half a small viewport. */
+@media (max-width: 48rem), (max-height: 40rem) {
+  .js-stage .stage__grid { grid-template-columns: 1fr; }
+  .js-stage .stage__phone { position: static; height: auto; }
+  .js-stage .stage__frames {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 230px));
+    width: auto;
+    max-height: none;
+    gap: var(--sp-4);
+    justify-content: center;
+  }
+  .js-stage .stage__shot { grid-area: auto; opacity: 1; }
+  .js-stage .beat {
+    min-height: 0;
+    border-left: 0;
+    padding-left: 0;
+  }
+  .js-stage .stage__beats { gap: var(--sp-12); }
+  .js-stage .stage__rail { display: none; }
+}

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Help &amp; Privacy — Agil</title>
+<meta name="description" content="Get help with Agil, read the answers to common questions, and read the full privacy policy — what Agil stores, what leaves your phone, and what it never touches.">
+<meta name="author" content="Bryce Hart">
+
+<!-- ==========================================================================
+     THIS PAGE IS BOTH App Store Connect URLs.
+
+       Support URL         https://<domain>/agil/help/
+       Privacy Policy URL  https://<domain>/agil/help/#privacy
+
+     Use the #privacy fragment for the policy field so a reviewer lands on the
+     policy heading rather than on the FAQ. agil.css sets scroll-padding-top,
+     so the sticky header won't cover the heading it jumps to.
+
+     Once a build has been submitted carrying these URLs, treat both paths as
+     permanent — do not rename this directory or change the #privacy id.
+     TODO: set the real domain here and in og:url before submitting.
+     ========================================================================== -->
+<link rel="canonical" href="https://brycehart.dev/agil/help/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Help &amp; Privacy — Agil">
+<meta property="og:description" content="Support, common questions, and the full Agil privacy policy.">
+<meta property="og:url" content="https://brycehart.dev/agil/help/">
+
+<link rel="icon" href="../../assets/agil/agil-icon-64.png" type="image/png">
+<link rel="stylesheet" href="../agil.css">
+
+<meta name="theme-color" content="#FCEEF6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#130810" media="(prefers-color-scheme: dark)">
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__brand" href="../">
+      <img class="nav__mark" src="../../assets/agil/agil-icon-64.png" alt="" width="32" height="32">
+      <span>Agil</span>
+    </a>
+
+    <ul class="nav__links">
+      <li><a href="../#tour">Tour</a></li>
+      <li><a href="../#built">How it's built</a></li>
+      <li><a href="./" aria-current="page">Help</a></li>
+    </ul>
+
+    <a class="nav__home" href="../../">&larr; brycehart.dev</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap wrap--narrow">
+      <p class="eyebrow">Agil</p>
+      <h1 class="page-head__title">Help &amp; Privacy</h1>
+      <p class="page-head__meta">
+        One person makes Agil, and that person answers the email.
+      </p>
+      <p style="margin-top: var(--sp-4);">
+        <a class="pill" href="#privacy" style="text-decoration: none;">
+          <span class="pill__dot" aria-hidden="true"></span>
+          Privacy policy &darr;
+        </a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT — above the table of contents, because it's why
+       humans arrive on this page.
+       ============================================================ -->
+  <section class="section section--tight" style="border-top: 0; padding-top: 0;" id="contact">
+    <div class="wrap wrap--narrow">
+      <div class="callout">
+        <h2 class="callout__title">Get in touch</h2>
+        <p>
+          Email <a class="link" href="mailto:bryce.hart23@gmail.com">bryce.hart23@gmail.com</a>
+          with anything &mdash; a bug, a question, or feature you want.
+          <!-- TODO: set an honest expectation here, e.g. "I usually reply within a
+               couple of days." Don't promise a window you won't hit — Apple's
+               reviewers do email the support address sometimes, and users notice. -->
+        </p>
+        <p>
+          For a bug, these four things turn a guess into a fix: your iPhone model, your
+          iOS version, the Agil version from Settings, and what you did right before it
+          went wrong.
+        </p>
+        <div class="card__links">
+          <a class="link" href="mailto:bryce.hart23@gmail.com">
+            Email support
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="link" href="https://github.com/Bryce-Hart1/Agil_app/issues">
+            Report an issue on GitHub
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="toc" aria-label="On this page" style="margin-top: 1.5rem;">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#faq">Common questions</a></li>
+          <li><a href="#requirements">Requirements</a></li>
+          <li>
+            <a href="#privacy">Privacy policy</a>
+            <ol>
+              <li><a href="#on-device">What stays on your device</a></li>
+              <li><a href="#leaves">What leaves your device</a></li>
+              <li><a href="#never">What is never sent</a></li>
+              <li><a href="#camera">Camera</a></li>
+              <li><a href="#notifications">Notifications</a></li>
+              <li><a href="#server">What the server records</a></li>
+              <li><a href="#third-parties">Third parties</a></li>
+              <li><a href="#choices">Your choices and deleting your data</a></li>
+              <li><a href="#children">Children</a></li>
+              <li><a href="#rights">Regional privacy rights</a></li>
+              <li><a href="#changes">Changes to this policy</a></li>
+              <li><a href="#privacy-contact">Privacy contact</a></li>
+            </ol>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       Q&A — <details> so it's skimmable, but every answer is in the
+       page for Ctrl-F and for search engines.
+       ============================================================ -->
+  <section class="section" id="faq">
+    <div class="wrap wrap--narrow">
+      <header class="section__head">
+        <h2 class="section__title">Common questions</h2>
+      </header>
+
+      <div class="qa">
+
+        <details>
+          <summary>Do I need an account?</summary>
+          <p>
+            No. There's no sign-up, no email address and no password. Open the app and
+            start logging. 
+          </p>
+        </details>
+
+        <details>
+          <summary>Is it really free? Is a subscription coming?</summary>
+          <p>
+            It's free, and every feature is available from the first launch. There's no
+            subscription and no features locked behind a paywall. The only thing to buy 
+            are cosmetic, and these are to insure that Agil can remain subscription free
+            for everyone. 
+          </p>
+        </details>
+
+        <details>
+          <summary>Where is my data stored?</summary>
+          <p>
+            In the app's own storage on your iPhone. Workouts, food, water, goals,
+            achievements and settings never leave the device. The one exception is
+            leaving Ghost Mode to use Friends, which uploads a profile card and your profile,
+            but its only ever data you choose to share. 
+             The <a href="#privacy">privacy policy</a> below
+            lists exactly what that card contains.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do I move to a new iPhone?</summary>
+          <p>
+            Agil's data is included in your iPhone backup, so restoring a backup onto
+            the new phone, or using direct device-to-device transfer during setup
+            &mdash; brings your history with it. Set the new phone up as a restore
+            rather than as a new device, and Agil will be where you left it.
+          </p>
+          <!-- TODO: confirm this on real hardware before release, and if you later add
+               an export/import file, say so here — it's the answer people want. -->
+          <p>
+            There's no cloud sync yet, so two phones won't share one history.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do I delete my data?</summary>
+          <p>
+            Turning Friends mode off deletes your profile card from the server. That is
+            the full extent of what the server ever holds, so it's the equivalent of
+            deleting an account. Doing this action is reversible, but not immediately.
+            We recommend only turning off friends mode if its something you have truly 
+            considered. You can also remove your data by scrolling to the bottom of settings 
+            and clicking "reset Agil"
+          </p>
+          <p>
+            Deleting the app from your iPhone removes everything stored locally. If 
+            you would like to insure your data is deleted, reset Agil.
+          </p>
+        </details>
+
+        <details>
+          <summary>What is Ghost Mode?</summary>
+          <p>
+            It's the default, and it means everything stays on this device. Nothing is
+            uploaded, and Friends is switched off. Private, fast, and yours alone.
+          </p>
+          <p>
+            Turning it off enables Friends, which shares only your profile card:
+            display name, card style, equipped rank and featured badges. You can
+            still access the shared database and upload to it if you would like.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do friends work?</summary>
+          <p>
+            Turn on Friends mode, and the app gives you a five-character friend code.
+            Share it with someone and they can send you a request; nothing is shared
+            until you accept. Once you're friends you can see each other's profile
+            cards, display name, icon, card style, showcased badges and rank
+            if you're showing it. From here, you can share workouts, recipes, 
+            or exercises.
+          </p>
+          <p>
+            You can block someone, which removes the friendship and stops further
+            requests. There's a daily cap on how many requests you can send, which
+            exists to stop people guessing codes at scale.
+          </p>
+        </details>
+
+        <details>
+          <summary>The barcode scanner can't find my food</summary>
+          <p>
+            Food data comes from Open Food Facts, which is community-maintained, so
+            regional and store-brand items are sometimes missing. When a scan comes up
+            empty, add the food by hand and it goes into your own library and it'll
+            be there next time.
+          </p>
+          <p>
+            If the scanner never finds anything at all, check that Agil has camera
+            access in Settings &rarr; Privacy &amp; Security &rarr; Camera, and that
+            the barcode is lit well enough to read.
+          </p>
+        </details>
+
+        <details>
+          <summary>I said no to the camera. Did I break anything?</summary>
+          <p>
+            No. Declining the camera only turns off barcode scanning; every other part
+            of the app works normally, and you can add foods manually. If you change
+            your mind, turn it back on in Settings &rarr; Agil &rarr; Camera.
+          </p>
+        </details>
+
+        <details>
+          <summary>My rest timer isn't alerting me!</summary>
+          <p>
+            The rest-timer alert and the &ldquo;workout still running&rdquo; nudge are
+            local notifications, so they need notification permission. Check Settings
+            &rarr; Agil &rarr; Notifications, and make sure the phone isn't in a Focus
+            mode that's silencing them.
+          </p>
+        </details>
+
+        <details>
+          <summary>The home screen widget is showing old numbers</summary>
+          <p>
+            The widget reads the numbers the app last wrote, and iOS decides when to
+            redraw it. Opening Agil refreshes it. If it stays stale for a long time,
+            removing the widget and adding it again forces a rebuild.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do I earn coins?</summary>
+          <p>
+            By training and logging consistently. Every distinct day you train in a week
+            climbs a ladder: 10, 20, 40, 80, up to 100 coins. Using the app, earning achievements
+            by tracking food, lifting, are all ways to earn coins. You can also buy them directly 
+            in the shop.
+          </p>
+          <p>
+            Coins buy themes, card styles and avatars in the shop, and the featured
+            selection changes day to day. Nothing in there affects tracking,
+            it's all appearance.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can I make my own theme?</summary>
+          <p>
+            No. Agil has 6 themes that you can use, crafted by our small team. 
+          </p>
+        </details>
+
+        <details>
+          <summary>I have a feature request</summary>
+          <p>
+            Send it. Agil is early and the roadmap isn't fixed: a lot of what's
+            in it started as somebody's annoyance with another app.
+            <a href="mailto:bryce.hart23@gmail.com">Email me</a> or
+            <a href="https://github.com/Bryce-Hart1/Agil_app/issues">open an issue</a>.
+          </p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       REQUIREMENTS
+       ============================================================ -->
+  <section class="section section--alt" id="requirements">
+    <div class="wrap wrap--narrow">
+      <header class="section__head">
+        <h2 class="section__title">Requirements</h2>
+      </header>
+
+      <dl class="facts">
+        <dt>Device</dt>
+        <dd>iPhone</dd>
+
+        <dt>iOS</dt>
+        <dd>16.1 or later</dd>
+
+        <dt>Version</dt>
+        <!-- TODO: keep this in step with MARKETING_VERSION in project.yml. -->
+        <dd>0.1.0 (alpha)</dd>
+
+        <dt>Price</dt>
+        <dd>Free. No subscription. If you want to support our team, you can always buy the founder pack or 
+          coins in the app.</dd>
+
+        <dt>Network</dt>
+        <dd>Needed only for food lookups and Friends mode. Everything else works offline.</dd>
+      </dl>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PRIVACY POLICY — the App Store Connect Privacy Policy URL points
+       at #privacy, so this heading is the landing point. Everything
+       from here down is the policy; headings are h3 because the policy
+       is a section of this document rather than its own page.
+       ============================================================ -->
+  <section class="section" id="privacy">
+    <div class="wrap wrap--narrow">
+
+      <header class="section__head">
+        <p class="eyebrow">Agil</p>
+        <h2 class="section__title">Privacy Policy</h2>
+        <p class="page-head__meta">
+          <!-- TODO: bump both dates whenever this policy changes in a way that matters. -->
+          Last updated: September 6th, 2026 &middot; Effective: September 6th, 2026
+        </p>
+      </header>
+
+      <div class="summary">
+        <h2>The short version</h2>
+        <ul>
+          <li>Agil has no accounts. No email address, no password, no sign-up.</li>
+          <li>Your workouts, food diary, water, goals and achievements are stored on
+              your phone and are not uploaded.</li>
+          <li>One thing can leave your phone, and only if you switch it on: your
+              <strong>profile card</strong> in Friends mode.</li>
+          <li>Scanning a barcode sends the barcode number to look the food up. It isn't
+              tied to you. If you choose to upload your scanned food, it becomes part
+              of the Agil food database and helps keep Agil useful and free for anyone</li>
+          <li>There are no ads, no analytics, no tracking SDKs, and nothing is sold or
+              shared with advertisers.</li>
+        </ul>
+      </div>
+
+      <div class="prose prose--policy" style="margin-top: 2rem;">
+
+        <p>
+          Agil is an iPhone app for tracking workouts and food, made by Bryce Hart
+          <!-- TODO: if you ever incorporate, put the legal entity name here instead. -->
+          (&ldquo;I&rdquo;, &ldquo;me&rdquo;). This policy explains what the app does
+          with your information. It covers the Agil iPhone app and the Agil server the
+          app talks to. It's written plainly on purpose &mdash; if anything here is
+          unclear, <a href="mailto:bryce.hart23@gmail.com">ask me</a> and I'll fix the
+          wording.
+        </p>
+
+        <h3 id="on-device">What stays on your device</h3>
+        <p>
+          Nearly everything. The app writes its data to its own private storage on your
+          iPhone, as files only Agil can read. That includes:
+        </p>
+        <ul>
+          <li>Workouts, exercises, sets, reps, weights, notes and rest timers</li>
+          <li>Presets and your exercise library</li>
+          <li>Your food diary, custom foods, meals, water and nutrition goals</li>
+          <li>Calorie and macro targets, and your focus nutrient</li>
+          <li>Achievements, rank progress, coins and anything you've unlocked in the shop</li>
+          <li>Your character, avatar and card style</li>
+          <li>App settings, including your theme</li>
+        </ul>
+        <p>
+          None of this is uploaded to me. If your iPhone is set to back up to iCloud or
+          to a computer, Apple's backup includes Agil's files along with every other
+          app's. 
+        </p>
+
+        <h3 id="leaves">What leaves your device</h3>
+
+        <h4>Friends mode &mdash; your profile card</h4>
+        <p>
+          Ghost Mode is the default, and Friends mode is
+          <strong>off until you turn it on</strong>. When you turn it on, the app
+          creates a random identifier for you and uploads a
+          <strong>profile card</strong> to the Agil server, so friends can see it. The
+          card contains exactly this and nothing else:
+        </p>
+        <ul>
+          <li>A random identifier and a short friend code, both generated on your device</li>
+          <li>The display name you chose</li>
+          <li>Your card style</li>
+          <li>Whether you're showing your rank, and if so the rank and its progress</li>
+          <li>The badges you chose to showcase (up to four)</li>
+          <li>The date you started using the app</li>
+          <li>Your character's appearance &mdash; the style pieces and colors you picked</li>
+        </ul>
+        <p>
+          Your display name and character are whatever you make them. If you'd rather
+          not be identifiable to the people you add, use a name that isn't your real one.
+        </p>
+        <p>
+          A card can be read by anyone who knows its random identifier. That identifier
+          is long and unguessable, and the app only ever hands it out through the friend
+          flow &mdash; someone with your five-character friend code can send you a
+          request, but they can't see your card until you accept. Sending a friend
+          request is limited to a small number per day, which is enforced by the server
+          keeping a per-day count against your identifier.
+        </p>
+        <p>
+          The server also stores your friendships and anyone you've blocked, so those
+          relationships survive between sessions.
+        </p>
+
+        <h4>Food lookups</h4>
+        <p>
+          When you scan a barcode or search for a food, the barcode number or the search
+          text is sent to the Agil server, which looks the item up in
+          <a href="https://world.openfoodfacts.org/">Open Food Facts</a> and caches the
+          result so the next person scanning that item doesn't need a second lookup.
+        </p>
+        <p>
+          These lookups <strong>do not carry your identifier</strong>, and they are not
+          linked to your account &mdash; you don't have one. Nothing about what you ate
+          is sent; the request is just the barcode or the words you typed.
+        </p>
+
+        <h3 id="never">What is never sent</h3>
+        <p>
+          To be explicit, none of the following ever leaves your phone: your workouts,
+          the sets and weights in them, your food diary, what you weigh, your calorie
+          and macro goals, your water log, your full set of earned achievements, your
+          coin balance, your contacts, your location, or your photo library. Agil doesn't
+          ask for contacts, location or photos at all.
+        </p>
+
+        <h3 id="camera">Camera</h3>
+        <p>
+          Agil asks for camera access for one reason: reading barcodes in the food
+          scanner. The camera feed is processed on your device by iOS and is never
+          recorded, saved or transmitted. Only the resulting barcode number is sent, and
+          only for that lookup. Decline the permission and every other part of the app
+          keeps working &mdash; you just add foods by hand instead.
+        </p>
+
+        <h3 id="notifications">Notifications</h3>
+        <p>
+          Agil's notifications are <em>local</em>: your phone schedules them and your
+          phone shows them. They tell you a rest timer finished, or nudge you about a
+          workout you left running. There is no push server and no notification content
+          leaves your device.
+        </p>
+
+        <h3 id="server">What the server records</h3>
+        <p>
+          Like any web server, the Agil server sees the IP address of connections that
+          reach it, and it keeps short-lived counters per IP address to stop any single
+          source from flooding it with requests. Operational logs may record the request
+          that was made &mdash; for example, that a particular barcode was looked up.
+        </p>
+        <p>
+          <!-- TODO: fill in your actual log retention once the production host is set up
+               (how long request logs are kept, and whether the reverse proxy keeps its
+               own access logs). Apple doesn't require a number here, but saying one and
+               being wrong is worse than saying none. Delete this comment when done. -->
+          These logs exist to keep the service running and to investigate abuse. They
+          aren't used to build a profile of you, and they aren't combined with your
+          profile card.
+        </p>
+        <p>
+          Traffic between the app and the server travels over an encrypted HTTPS
+          connection.
+          <!-- ⚠️ RELEASE BLOCKER — CARRIED FORWARD FROM THE OLD PRIVACY PAGE, DO NOT DROP.
+               This sentence is a promise, and the backend serves plain HTTP today (see
+               agil_backend/security.md item 1 and the ATS exceptions in project.yml).
+               TLS must be terminated in front of the service and the Release
+               AGIL_BACKEND_BASE_URL must point at the HTTPS host BEFORE this page is
+               published or a build is submitted. -->
+        </p>
+
+        <h3 id="third-parties">Third parties</h3>
+        <p>
+          Agil has no advertising SDKs, no analytics SDKs and no crash-reporting SDKs.
+          Nothing tracks you across other apps or websites, so Agil never shows you
+          Apple's tracking-permission prompt. I don't sell your information, and there
+          is no one to sell it to.
+        </p>
+        <p>The only outside services involved are:</p>
+        <ul>
+          <li>
+            <strong>Open Food Facts</strong> &mdash; the open database Agil looks foods
+            up in. Barcode and search requests are made by the Agil server, not by your
+            phone, so your device isn't exposed to them directly. Their privacy policy
+            is on <a href="https://world.openfoodfacts.org/">their site</a>.
+          </li>
+          <li>
+            <strong>Apple</strong> &mdash; distributes the app and handles device
+            backups under
+            <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>.
+          </li>
+          <!-- TODO — ADD A THIRD BULLET NAMING YOUR HOST BEFORE YOU SUBMIT.
+               The old page rendered the literal words "TODO: hosting provider" to
+               visitors, so it has been removed rather than left visible. The list above
+               is accurate while the backend runs only on localhost and your LAN. The
+               moment it is deployed somewhere, whoever runs that hardware is a data
+               processor and belongs here. If you self-host, say so plainly — "the
+               server runs on hardware I own" reads better than a vendor name. -->
+        </ul>
+
+        <h3 id="choices">Your choices and deleting your data</h3>
+        <ul>
+          <li>
+            <strong>Turn Friends mode off.</strong> Doing so deletes your profile card
+            from the server. This is the equivalent of deleting an account: after it,
+            the server holds nothing about you.
+          </li>
+          <li>
+            <strong>Reset the App.</strong> Doing so deletes your profile card
+            from the server. This deletes all data on device and on the server 
+            of you using Agil.
+          </li>
+          <li>
+            <strong>Stay in Ghost Mode.</strong> With Friends mode off, the app never
+            uploads anything, and works fully offline apart from food lookups. You
+            will still be asked to upload foods you scan, and can submit correction
+            requests.
+          </li>
+          <li>
+            <strong>Block someone.</strong> Blocking removes the friendship and stops
+            further requests from that person.
+          </li>
+          <li>
+            <strong>Delete the app.</strong> Removing Agil from your iPhone deletes its
+            local data with it. Deleting the app removes a profile card you uploaded.
+          </li>
+        </ul>
+
+        <h3 id="children">Children</h3>
+        <p>
+          Agil isn't directed at children under 13, and I don't knowingly collect
+          information from them. If you believe a child has uploaded a profile card,
+          delete their account inside of settings.
+        </p>
+
+        <h3 id="rights">Regional privacy rights</h3>
+        <!-- TODO — REVIEW THIS SECTION AGAINST WHERE YOU ACTUALLY DISTRIBUTE.
+             The old page rendered the literal word "TODO" here as body copy, so it has
+             been replaced with the baseline below, which is true in every region and
+             claims no jurisdiction. Before submitting, check App Store Connect →
+             Pricing and Availability and decide:
+               • Selling into the EU/UK pulls in the GDPR. You would then name a lawful
+                 basis (consent for the profile card, legitimate interest for the abuse
+                 limits), a retention period, and a contact for requests.
+               • California pulls in the CCPA/CPRA, which mostly turns on "do you sell
+                 personal information" — you don't, and the section below says so.
+               • Limiting an alpha to the US is a legitimate choice. If you do that, say
+                 so here rather than implying worldwide coverage.
+             Whatever you choose, it has to be true of what the app actually does. -->
+        <p>
+          Some places give you specific rights over your personal information. Rather
+          than list them by jurisdiction, here is the position everywhere, which is the
+          same position for everyone:
+        </p>
+        <ul>
+          <li>
+            <strong>I don't sell your information, and I never have.</strong> There is
+            no advertising, no data broker, and no analytics pipeline to sell into.
+          </li>
+          <li>
+            <strong>You can get a copy of everything the server holds about you</strong>
+            &mdash; which is at most one profile card, your friendships, and your blocks.
+            Email me with your friend code.
+          </li>
+          <li>
+            <strong>You can have it deleted</strong>, either by turning Friends mode off
+            in the app, which does it immediately and by yourself, or by asking me.
+          </li>
+          <li>
+            <strong>You can use the whole app without giving up any of it</strong>, by
+            staying in Ghost Mode. Nothing is uploaded and no feature is withheld for
+            refusing.
+          </li>
+        </ul>
+        <p>
+          If you're somewhere that grants you a right not covered above, write to me and
+          I'll honour it.
+        </p>
+
+        <h3 id="changes">Changes to this policy</h3>
+        <p>
+          If this policy changes, the date at the top of it changes with it. Substantial
+          changes &mdash; anything that alters what leaves your device &mdash; will also
+          be called out in the app's release notes. Continuing to use Agil after a
+          change means the updated policy applies.
+        </p>
+
+        <h3 id="privacy-contact">Privacy contact</h3>
+        <p>
+          Agil is made by one person, so privacy questions and requests come straight to
+          me: <a href="mailto:bryce.hart23@gmail.com">bryce.hart23@gmail.com</a>.
+          <!-- TODO: some jurisdictions expect a postal address for privacy requests.
+               Add one here if you decide to serve those regions. -->
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; <span data-year>2026</span> Bryce Hart</p>
+    <ul class="site-footer__links">
+      <li><a href="../">Agil</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="../../">brycehart.dev</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- This page never loads the animation engine. It is the URL App Review opens,
+     often on a throttled connection, and it has nothing to animate. -->
+<script src="../agil.js" defer></script>
+</body>
+</html>

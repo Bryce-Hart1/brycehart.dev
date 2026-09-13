@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- TODO: Replace with your real tagline. This shows up in Google results and on the browser tab. -->
+<title>Bryce Hart — Software Developer</title>
+<meta name="description" content="My name is Bryce, I'm a software developer who builds low-level systems"> <!--REFINE-->
+<meta name="author" content="Bryce Hart">
+
+<!-- TODO: Once you have a domain, set it here and in og:url. Delete these two lines if you never get one. -->
+<link rel="canonical" href="https://brycehart.dev/">
+
+<!-- Open Graph: controls the preview card when your link is pasted into Slack, LinkedIn, iMessage, etc. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bryce Hart — Software Developer">
+<meta property="og:description" content="My name is Bryce, I'm a software developer who builds low-level systems">
+<meta property="og:url" content="https://brycehart.dev/">
+<!-- TODO: Add assets/og-image.png (1200x630) for a proper link preview, then uncomment. -->
+<!-- <meta property="og:image" content="https://brycehart.dev/assets/og-image.png"> -->
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+
+<!-- Controls the browser UI color on mobile Safari/Chrome — matches --bg. -->
+<meta name="theme-color" content="#faf6f0">
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__brand" href="#top">
+      <span class="nav__mark" aria-hidden="true">BH</span>
+      <span class="nav__name">Bryce Hart</span>
+    </a>
+
+    <ul class="nav__links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================
+       HERO — the first thing a recruiter reads. Keep it short.
+       ============================================================ -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <p class="hero__eyebrow">
+        <span class="status-dot" aria-hidden="true"></span>
+        <!-- TODO: Or "Open to full-time roles" / "Building things at X" -->
+        Open to internships &amp; new grad roles
+      </p>
+
+      <h1 class="hero__title">
+        <!-- TODO: Rewrite this. One line, plain language, no buzzwords.
+             Say what you build and what you care about. Examples:
+               "I build low-level systems — emulators, kernels, and the tools around them."
+               "Computer science student who likes making computers do things they weren't supposed to." -->
+        I build <em>low-level systems</em> and the tools that make them usable.
+      </h1>
+
+      <p class="hero__lede">
+        <!-- TODO: Two or three sentences. Who you are, what you're studying or doing now,
+             and what kind of work you want next. Write it like you'd say it out loud. -->
+          My name is Bryce, I'm a senior at East Carolina University. I have a passion for low-level design
+          and data storage.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#projects">
+          View projects
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+        <!-- TODO: Re-enable once assets/resume.pdf exists (public copy without phone number). -->
+        <!-- <a class="btn" href="assets/resume.pdf">Resume</a> -->
+        <a class="btn" href="https://github.com/Bryce-Hart1">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PROJECTS — the reason the site exists.
+       To add one: copy an <article class="card"> block and edit it.
+       Order matters. Strongest project first.
+       ============================================================ -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <header class="section__head">
+        <h2 class="section__title">Projects</h2>
+      </header>
+
+      <div class="grid">
+
+        <!-- ---------- CPU Emulator ---------- -->
+        <article class="card">
+          <div class="card__head">
+            <h3 class="card__title">CPU Emulator</h3>
+            <span class="card__year">2025-2026</span>
+          </div>
+          <p class="card__body">
+            My first real Rust project that has a custom instruction set, that I call EM
+            (Emulator Machine code). It's able to run simple programs step by step over a BIOS 
+            layer that I compiled with the assembler, which is also included. This is all displayed 
+            in a Raylib window. This is accompanied by a supporting Python app that allows you to write 
+            your own programs in EM.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>C++, Rust, Raylib, Python</li>
+            <li>Cargo</li>
+          </ul>
+          <div class="card__links">
+            <a class="link" href="https://github.com/Bryce-Hart1/CPU_Emulator">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <!-- Optional: add a live demo, a writeup, or a demo GIF link here. -->
+          </div>
+        </article>
+
+
+        <!-- ---------- Agil ---------- -->
+        <article class="card">
+          <div class="card__head">
+            <h3 class="card__title">Agil</h3>
+            <span class="card__year">2026</span>
+          </div>
+          <p class="card__body">
+            This is my first production app that I ever built! It features a Rust backend and Swift 
+            frontend. I was tired of all these fitness apps locking features of their apps behind paywalls.
+            So I built my own. No paywalls or monthly subscriptions.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>Swift, Rust, Python</li>
+            <li>Open Food Facts</li>
+          </ul>
+          <div class="card__links">
+            <a class="link" href="agil/">
+              Agil site
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="link" href="https://github.com/Bryce-Hart1/Agil_app">
+              App
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- ---------- Castle Plus ---------- -->
+        <article class="card">
+          <div class="card__head">
+            <h3 class="card__title">Castle Plus</h3>
+            <span class="card__year">2026</span>
+          </div>
+          <p class="card__body">
+            castle+ is a from-scratch C++ reverse proxy and process supervisor built directly on `epoll`
+             that terminates TLS, routes HTTP traffic to backend services it launches and health-checks itself, 
+             and streams request bodies of any size with bounded memory. It includes production-grade hardening like per-IP rate limiting,
+             live certificate reloads, and a Unix-socket admin control plane, and runs today on my home server on my
+            Lenovo ThinkCentre, which you can find a link for 
+            the linkedin post I made when I built it below.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>C++</li>
+          </ul>
+          <div class="card__links">
+            <a class="link" href="https://github.com/Bryce-Hart1/castle_plus">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <!-- TODO: replace with the LinkedIn post URL -->
+            <a class="link" href="https://github.com/Bryce-Hart1/castle_plus">
+              LinkedIn Post
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- ---------- library ---------- -->
+        <article class="card">
+          <div class="card__head">
+            <h3 class="card__title">b-standard</h3>
+            <span class="card__year">2025</span>
+          </div>
+          <p class="card__body">
+            This is my go-to library for when I build anything that I believe is reusable in other projects,
+            or I feel like learning how a real system or library works. Includes pieces of ASM, C++, C and 
+            Rust.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>Rust, C++</li>
+          </ul>
+          <div class="card__links">
+            <a class="link" href="https://github.com/Bryce-Hart1/mylib">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- ---------- SwiftSearch ---------- -->
+
+        <article class="card">
+          <div class="card__head">
+            <h3 class="card__title">SwiftSearch</h3>
+            <span class="card__year">2025</span>
+          </div>
+          <p class="card__body">
+            My first big project I ever did, mainly to help me learn multithread design
+            after I took Operating Systems. It uses available threads to perform a search operation
+            to find words or phrases in a series of files. To test this I created a Python Script to 
+            autogenerate files for testing.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>multithreading, C++, Python</li>
+          </ul>
+          <div class="card__links">
+            <a class="link" href="https://github.com/Bryce-Hart1/multithread_Search">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="section__foot">
+        <a class="link" href="https://github.com/Bryce-Hart1?tab=repositories">
+          Everything else on GitHub
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT
+       ============================================================ -->
+  <section class="section section--alt" id="about">
+    <div class="wrap wrap--narrow">
+      <header class="section__head">
+        <h2 class="section__title">About</h2>
+      </header>
+
+      <div class="prose">
+        <p>
+          When I was younger, I 
+        </p>
+        <p>
+          Outside of Computer Science, I love working out with my friends and working on my car.
+        </p>
+      </div>
+
+      <!-- TODO: Trim this to what you'd be comfortable being interviewed on.
+           A short honest list reads better than an exhaustive one. -->
+      <div class="toolbox">
+        <h3 class="toolbox__title">Working with</h3>
+        <ul class="tags tags--lg">
+          <li>C++</li>
+          <li>Rust</li>
+          <li>Swift</li>
+          <li>Python</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section class="section" id="contact">
+    <div class="wrap wrap--narrow">
+      <header class="section__head">
+        <h2 class="section__title">Get in touch</h2>
+        <p class="section__sub">
+          Looking for Software Engineering work.
+        </p>
+      </header>
+
+      <ul class="contact">
+        <li>
+          <a class="contact__item" href="mailto:bryce.hart23@gmail.com">
+            <span class="contact__label">Email</span>
+            <span class="contact__value">bryce.hart23@gmail.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__item" href="https://github.com/Bryce-Hart1">
+            <span class="contact__label">GitHub</span>
+            <span class="contact__value">Bryce-Hart1</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__item" href="https://www.linkedin.com/in/bryce-hart1/">
+            <span class="contact__label">LinkedIn</span>
+            <span class="contact__value">Bryce-Hart1</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; <span data-year>2026</span> Bryce Hart</p>
+    <p class="site-footer__meta">Built from scratch. No frameworks.</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

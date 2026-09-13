@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Agil — a gym and nutrition tracker with nothing behind a paywall</title>
+<meta name="description" content="Agil is an iPhone app for tracking lifts and food. Every feature is free, your training data stays on your phone, and there is no subscription.">
+<meta name="author" content="Bryce Hart">
+
+<!-- TODO: set the real domain here and in og:url once it's pointed at this site. -->
+<link rel="canonical" href="https://brycehart.dev/agil/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agil: a gym and nutrition tracker with no features behind a paywall">
+<meta property="og:description" content="Track lifts and food on your iPhone. No subscription. Launching October 15, 2026.">
+<meta property="og:url" content="https://brycehart.dev/agil/">
+<!-- TODO: add assets/agil/og-image.png (1200x630) and uncomment for link previews. -->
+<!-- <meta property="og:image" content="https://brycehart.dev/assets/agil/og-image.png"> -->
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../assets/agil/agil-icon-64.png" type="image/png">
+<link rel="stylesheet" href="agil.css">
+
+<!-- Only the first screenshot. It is the LCP element in both the pinned layout
+     and the fallback; the other two are lazy and are promoted to eager one beat
+     before they're needed. Deliberately NOT preloading the anime bundle — it is
+     deferred, and preloading it would make it compete with this image. -->
+<link rel="preload" as="image" href="../assets/agil/shots/shot-profile.jpg" fetchpriority="high">
+
+<meta name="theme-color" content="#FCEEF6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#130810" media="(prefers-color-scheme: dark)">
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__brand" href="./">
+      <img class="nav__mark" src="../assets/agil/agil-icon-64.png" alt="" width="32" height="32">
+      <span>Agil</span>
+    </a>
+
+    <ul class="nav__links">
+      <li><a href="#tour">Tour</a></li>
+      <li><a href="#built">How it's built</a></li>
+      <li><a href="help/">Help</a></li>
+    </ul>
+
+    <a class="nav__home" href="../">&larr; brycehart.dev</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <!-- The launch hero. agil-countdown.js reads data-launch and does everything
+       else; with JS off the countdown stays hidden (CSS gates it on
+       .js-countdown) and the written date below is what visitors get. -->
+  <section class="hero launch" id="top" data-launch="2026-10-15T00:00:00-04:00" aria-labelledby="launch-title">
+    <div class="launch__orbs" aria-hidden="true">
+      <span class="launch__orb"></span>
+      <span class="launch__orb"></span>
+      <span class="launch__orb"></span>
+    </div>
+
+    <div class="wrap launch__inner">
+      <img class="hero__mark launch__mark" data-intro src="../assets/agil/agil-icon-192.png"
+           alt="The Agil app icon: a pink kettlebell with a letter A on it."
+           width="96" height="96">
+
+      <p class="pill" data-intro>
+        <span class="pill__dot" aria-hidden="true"></span>
+        <span data-launch-pill data-launched-text="Out now on iPhone">Launching October 15</span>
+      </p>
+
+      <h1 class="hero__title launch__title" id="launch-title" data-intro data-launched-text="Agil is here.">
+        Agil is almost here.
+      </h1>
+
+      <p class="hero__lede launch__lede" data-intro>
+        Track your lifts. Build streaks. Create your own Agil. An iPhone app for
+        what you lift and what you eat, with every feature in it from the first
+        launch and nothing behind a paywall.
+      </p>
+
+      <div class="countdown" role="timer" aria-labelledby="launch-date" data-countdown>
+        <div class="countdown__unit" data-intro-unit>
+          <span class="countdown__num" data-unit="days" aria-hidden="true"></span>
+          <span class="countdown__label">Days</span>
+        </div>
+        <div class="countdown__unit" data-intro-unit>
+          <span class="countdown__num" data-unit="hours" aria-hidden="true"></span>
+          <span class="countdown__label">Hours</span>
+        </div>
+        <div class="countdown__unit" data-intro-unit>
+          <span class="countdown__num" data-unit="minutes" aria-hidden="true"></span>
+          <span class="countdown__label">Minutes</span>
+        </div>
+        <div class="countdown__unit countdown__unit--seconds" data-intro-unit>
+          <span class="countdown__ring" data-ring aria-hidden="true"></span>
+          <span class="countdown__num" data-unit="seconds" aria-hidden="true"></span>
+          <span class="countdown__label">Seconds</span>
+        </div>
+        <div class="countdown__burst" data-burst aria-hidden="true"></div>
+      </div>
+
+      <!-- Updated at most once a minute, so a screen reader isn't read a number every second. -->
+      <p class="visually-hidden" aria-live="polite" data-countdown-summary></p>
+
+      <p class="launch__date" id="launch-date" data-intro>
+        Free on the App Store &middot;
+        <time datetime="2026-10-15T00:00-04:00">October 15, 2026</time>
+      </p>
+
+      <div class="hero__actions launch__actions" data-intro>
+        <a class="btn btn--primary" href="#tour" data-prelaunch>
+          Get a sneak peek
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+        <!-- TODO: App Store link. Replace this button with the official
+             "Download on the App Store" badge from
+             https://developer.apple.com/app-store/marketing/guidelines/
+             Use the badge artwork unmodified, keep its clear space, and don't recolor
+             or rebuild it — those are Apple's terms for using the mark. -->
+        <a class="btn btn--primary" href="#" data-launched hidden>
+          Get Agil on the App Store
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+        <a class="btn" href="help/">Help &amp; privacy</a>
+      </div>
+    </div>
+
+    <a class="launch__cue" href="#tour" aria-label="Scroll to the tour">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v13M6 13l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+
+  <!-- ============================================================
+       THE TOUR — the scroll-driven stage.
+
+       Structure contract, so this stays easy to extend:
+         * every <figure data-shot="N"> is one screen, stacked in one grid cell
+         * every <li data-beat="N" data-shot="M"> is one talking point, and M
+           says which screen it wants showing
+         * the map is many-to-one: several beats may point at the same screen,
+           and the swap no-ops when the index doesn't change
+       ADDING A SCREEN LATER is three edits and no code: drop the file in
+       assets/agil/shots/, add a <figure data-shot="N">, point a beat at it.
+
+       Every word below is in the served HTML. The script injects no text, which
+       is what makes the no-JS case a non-event.
+       ============================================================ -->
+  <section class="stage" id="tour" data-stage aria-labelledby="tour-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">A tour</p>
+        <h2 class="section__title" id="tour-title">What using it actually looks like</h2>
+      </header>
+
+      <div class="stage__grid">
+
+        <!-- The pinned column. Unpinned and laid out as a strip in the fallback. -->
+        <div class="stage__phone">
+          <div class="stage__frames" data-stage-frames>
+
+            <figure class="shot stage__shot" data-shot="0">
+              <img src="../assets/agil/shots/shot-profile.jpg" width="600" height="1304"
+                   fetchpriority="high" decoding="async"
+                   alt="Agil's Profile tab. A pill at the top reads “Food · 0-wk streak” with a
+                        switch arrow. Below it a Strategist rank row shows a bronze chess pawn,
+                        “Initiate”, and “7 to Squire”, then rows for Edit Profile Card, Friends
+                        (marked disabled in ghost mode), Premade Workouts and Achievements.">
+            </figure>
+
+            <figure class="shot stage__shot" data-shot="1">
+              <img src="../assets/agil/shots/shot-premade.jpg" width="600" height="1304"
+                   loading="lazy" decoding="async"
+                   alt="The Premade Workouts sheet: “Need inspiration? Start with one of our teams
+                        researched workouts”, then Push Day — six lifts, chest, shoulders and
+                        triceps — and Full Body A.">
+            </figure>
+
+            <figure class="shot stage__shot" data-shot="2">
+              <img src="../assets/agil/shots/shot-card.jpg" width="600" height="1304"
+                   loading="lazy" decoding="async"
+                   alt="The Edit Profile Card screen with Card and Character tabs. A pink profile
+                        card shows the Agil mark, a lifter avatar in a progress ring, the name
+                        “Bryce”, the rank “Initiate” and “Member since Jul 2026”, above the hint
+                        “Tap any part of your card to edit it.”">
+            </figure>
+
+            <!-- SLOT: the next screenshot goes here as data-shot="3", and one beat
+                 below gets pointed at it. Nothing else changes.
+                 Wanted next, in priority order:
+                   3  active workout / set-by-set logging with the rest timer
+                   4  the food diary with the macro summary
+                   5  the barcode scanner
+                   6  the progress dashboard charts
+                   7  the theme picker and the home screen widget -->
+
+            <span class="stage__rail" data-stage-rail aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <!-- The scrolling column. -->
+        <ol class="stage__beats">
+
+          <li class="beat" data-beat="0" data-shot="0">
+            <h3 class="beat__title" data-beat-line>Two apps in one, and the notch flips them</h3>
+            <p class="beat__body" data-beat-line>
+              The pill at the top of the screen shows the side you're on, plus a stat
+              from the other one. Tap it and the whole app flips between Lifting and
+              Food. Different tabs, same account, one tap apart.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="1" data-shot="0">
+            <h3 class="beat__title" data-beat-line>Show up. Get rewarded.</h3>
+            <p class="beat__body" data-beat-line>
+              The more consistent you get, the more it pays. Every distinct day you
+              train in a week climbs the ladder &mdash; 10, 20, 40, 80, up to
+              <span class="beat__count" data-count="100">100</span> coins. Reset every week.
+            </p>
+            <p class="beat__body" data-beat-line>
+              Coins buy themes, card styles and avatars.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="2" data-shot="0">
+            <span class="ghost-mark" data-draw aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 11a7 7 0 0 1 14 0v7a1.78 1.78 0 0 1 -3.1 1.4a1.65 1.65 0 0 0 -2.6 0a1.65 1.65 0 0 1 -2.6 0a1.65 1.65 0 0 0 -2.6 0a1.78 1.78 0 0 1 -3.1 -1.4v-7"/><path d="M10 10h.01"/><path d="M14 10h.01"/></svg>
+            </span>
+            <h3 class="beat__title" data-beat-line>Ghost Mode or Friends?</h3>
+            <p class="beat__body" data-beat-line>
+              Ghost Mode is the default, and it means what it says: everything stays on
+              this device. Private, fast, and yours alone. Turn on Friends and the only
+              thing that ever leaves is your profile card. Never a workout, never
+              a meal.
+            </p>
+            <p class="beat__note" data-beat-line>
+              <a class="link" href="help/#privacy">Exactly what's on that card &rarr;</a>
+            </p>
+          </li>
+
+          <li class="beat" data-beat="3" data-shot="1">
+            <h3 class="beat__title" data-beat-line>Start from a premade, or build it yourself</h3>
+            <p class="beat__body" data-beat-line>
+              Open a blank session and fill it in as you train, or start from a preset
+              you've already built. No inspiration today? The premade catalog has whole
+              sessions ready to add in one tap. Built by our team here at Agil, by hand. No AI.
+            </p>
+            <p class="beat__body" data-beat-line>
+              Log reps and weight set by set, keep per-exercise notes and target rep
+              ranges, and run the rest timer between sets. Tt still alerts you
+              with the phone locked. Unilateral lifts are tracked per side rather than
+              averaged into one number.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="4" data-shot="2">
+            <h3 class="beat__title" data-beat-line>An app that's yours</h3>
+            <p class="beat__body" data-beat-line>
+              Build a character, pick a card style, showcase the badges you care about.
+              The shop rotates daily, and everything in it is cosmetic. Nothing
+              you can equip changes what the app tracks.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="5" data-shot="0">
+            <h3 class="beat__title" data-beat-line>A rank that moves on consistency, not on how much you lift</h3>
+            <p class="beat__body" data-beat-line>
+              The Strategist ladder runs pawn to king. It climbs on showing up, so it
+              rewards the part of training that's actually hard.
+            </p>
+            <ul class="ladder" data-ladder aria-label="The Strategist rank ladder, from pawn to king">
+              <li style="--piece: url('../assets/agil/icons/chess_pawn_0.svg')"></li>
+              <li style="--piece: url('../assets/agil/icons/chess_bishop_1.svg')"></li>
+              <li style="--piece: url('../assets/agil/icons/chess_knight_2.svg')"></li>
+              <li style="--piece: url('../assets/agil/icons/chess_rook_3.svg')"></li>
+              <li style="--piece: url('../assets/agil/icons/chess_queen_4.svg')"></li>
+              <li style="--piece: url('../assets/agil/icons/chess_king_5.svg')"></li>
+            </ul>
+          </li>
+
+          <!-- SLOT beat 6 — needs shot 3 (active workout). Copy is ready:
+               "Log it set by set" / "Reps and weight per set, per-exercise notes and
+               target rep ranges, and a rest timer that still alerts you with the phone
+               locked. Finishing a workout earns coins and drives your badges."
+               SLOT beat 7 — needs shot 4 (food diary): macros plus fiber, sugar and
+               sodium; pick a focus nutrient; log water.
+               SLOT beat 8 — needs shot 5 (barcode scanner): Open Food Facts lookup,
+               add-by-hand fallback.
+               SLOT beat 9 — needs shot 6 (progress): "Charts and trends from everything
+               you've logged: volume, best lifts, and how your training is moving." -->
+
+        </ol>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       THE REST — food, barcode, widget. These read well as cards and
+       don't need a screen each.
+       ============================================================ -->
+  <section class="section">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">And on the food side</p>
+        <h2 class="section__title">The other half of the app</h2>
+      </header>
+
+      <div class="grid">
+
+        <article class="card">
+          <h3 class="card__title">Food and macros</h3>
+          <p class="card__body">
+            Log meals against calorie and macro goals, with fiber, sugar and sodium
+            tracked alongside protein, carbs and fat. Can't seem to remember to take your creatine?
+            Agils got you covered. Pick a focus nutrient and Agil can remind you to keep you on track.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Barcode scanning</h3>
+          <p class="card__body">
+            Point the camera at a barcode and the food comes back with its full
+            nutrition breakdown, sourced from the
+            <a class="link" href="https://world.openfoodfacts.org/">Open Food Facts</a>
+            database. Anything it doesn't know, you can add by hand and keep in your
+            own library.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Progress worth reading</h3>
+          <p class="card__body">
+            Charts and trends from everything you've logged: training volume, your
+            best lifts, estimated one-rep maxes, and how the whole thing is moving
+            over months rather than days. A summary of what you've achieved, always 
+            private.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Achievements and the badge book</h3>
+          <p class="card__body">
+            Badges land quietly and wait for you in a paged book, sealed until you
+            open them. Thresholds are calibrated to you when you first set the app
+            up, so they mean something whatever you're lifting.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Home screen widget</h3>
+          <p class="card__body">
+            Today's calories and your focus goal on the home screen, drawn in
+            whatever theme the app is currently wearing.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Friends, only if you want them</h3>
+          <p class="card__body">
+            Share a five-character friend code. With this you can share recipes,
+            workouts, or just an exercise you're trying.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       THEMES
+       ============================================================ -->
+  <section class="section section--alt">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Make it yours</p>
+        <h2 class="section__title">Six themes, or build your own</h2>
+        <p class="section__sub">
+          A theme sets the accent, the background, the card color and the typeface,
+          everywhere at once. Classic ships free and follows your phone's light and
+          dark setting; the rest are unlocked with coins.
+        </p>
+      </header>
+
+      <ul class="swatches">
+        <li class="swatch">
+          <div class="swatch__chip" aria-hidden="true">
+            <span style="background:#FCEEF6"></span><span style="background:#EA0F8B"></span>
+          </div>
+          <p class="swatch__name">Classic &middot; free</p>
+        </li>
+        <li class="swatch">
+          <div class="swatch__chip" aria-hidden="true">
+            <span style="background:#0B0B0F"></span><span style="background:#5E5CE6"></span>
+          </div>
+          <p class="swatch__name">Midnight</p>
+        </li>
+        <li class="swatch">
+          <div class="swatch__chip" aria-hidden="true">
+            <span style="background:#EAF6F8"></span><span style="background:#17646C"></span>
+          </div>
+          <p class="swatch__name">Deep Sea</p>
+        </li>
+        <li class="swatch">
+          <div class="swatch__chip" aria-hidden="true">
+            <span style="background:#BB5F2A"></span><span style="background:#FF7043"></span>
+          </div>
+          <p class="swatch__name">Sunset</p>
+        </li>
+        <li class="swatch">
+          <div class="swatch__chip" aria-hidden="true">
+            <span style="background:#0E1511"></span><span style="background:#34C759"></span>
+          </div>
+          <p class="swatch__name">Leaf</p>
+        </li>
+        <li class="swatch">
+          <div class="swatch__chip" aria-hidden="true">
+            <span style="background:#1A140E"></span><span style="background:#8FAE5D"></span>
+          </div>
+          <p class="swatch__name">Woods</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       THE PITCH
+       ============================================================ -->
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="callout">
+        <h2 class="callout__title">Nothing is behind a paywall</h2>
+        <p>
+          Agil got built because every fitness app I tried put the useful half behind
+          a subscription, or all of the workouts and progression was tracked by AI. 
+          With Agil, I could write my vision into it: always free software that grows 
+          with you without selling your data.
+        </p>
+        <p>
+          Your training data isn't the product either. Workouts, food, water and
+          bodyweight stay in the app's own storage on your phone unless you
+          deliberately leave Ghost Mode, and even then, all that leaves is your
+          profile card. 
+          <a class="link" href="help/#privacy">privacy policy</a> spells out exactly
+          what that includes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       HOW IT'S BUILT — the recruiter half.
+       ============================================================ -->
+  <section class="section section--alt" id="built">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">For the curious</p>
+        <h2 class="section__title">How it's built</h2>
+        <p class="section__sub">
+          Written by one person &mdash; a SwiftUI app and a Rust service, no framework
+          scaffolding underneath either of them.
+        </p>
+      </header>
+
+      <div class="grid">
+
+        <article class="card">
+          <h3 class="card__title">iOS app</h3>
+          <p class="card__body">
+            SwiftUI, iOS 16.1 and up. The project is generated from a
+            <code>project.yml</code> with XcodeGen rather than a checked-in
+            <code>.xcodeproj</code>, so the target graph is reviewable in a diff.
+          </p>
+          <ul class="tags">
+            <li>Swift</li>
+            <li>SwiftUI</li>
+            <li>WidgetKit</li>
+            <li>AVFoundation</li>
+            <li>XcodeGen</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Theming</h3>
+          <p class="card__body">
+            A theme is a <code>Codable</code> struct of hex strings, so custom themes
+            persist as JSON like everything else. Adaptive themes resolve to a dynamic
+            <code>UIColor</code> that switches with the system appearance, and the
+            typeface rides along on the theme via one root
+            <code>.fontDesign()</code> that the whole view tree inherits.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Storage</h3>
+          <p class="card__body">
+            One type touches the disk. Everything is <code>Codable</code> JSON written
+            with a schema version wrapped around it, so migrations are possible later
+            without corrupting existing saves. The widget reads today's numbers out of
+            a shared App Group.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">The shop has no backend</h3>
+          <p class="card__body">
+            The daily rotation is computed offline from a date seed, so every user
+            sees the same featured items on the same day with no server round trip
+            and no way for the app to phone home about what you're browsing.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Backend</h3>
+          <p class="card__body">
+            Rust on Axum with Diesel over SQLite. It serves the shared profile cards
+            and the friend graph, and proxies food lookups to Open Food Facts as a
+            read-through cache so the same barcode is only ever fetched upstream once.
+          </p>
+          <ul class="tags">
+            <li>Rust</li>
+            <li>Axum</li>
+            <li>Diesel</li>
+            <li>SQLite</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Identity without accounts</h3>
+          <p class="card__body">
+            There is no email, no password and no user table. A device generates a
+            random UUID and a 256-bit secret held in the Keychain; the server stores
+            only the SHA-256 of that secret and trusts the first write to claim the id.
+            Reads of a card are public, writes must present the key.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Abuse limits</h3>
+          <p class="card__body">
+            A hand-rolled per-IP token bucket, one bucket per route class, so hammering
+            food search can't lock out card sync. The bucket map sweeps itself so it
+            can't become the memory-exhaustion surface it was meant to prevent. Friend
+            requests get a separate per-user daily quota that counts attempts, not
+            successes, to bound code enumeration.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">This page</h3>
+          <p class="card__body">
+            Hand-written HTML and CSS with no build step and no framework. The scroll
+            tour is <a class="link" href="https://animejs.com/">anime.js</a>, vendored
+            as a file rather than pulled from a CDN, and it drives one class on
+            <code>&lt;html&gt;</code>, everything it does is additive, so the
+            page is complete without it.
+          </p>
+          <ul class="tags">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>anime.js</li>
+          </ul>
+        </article>
+
+      </div>
+
+      <div class="card__links" style="margin-top: 2rem;">
+        <a class="link" href="https://github.com/Bryce-Hart1/Agil_app">
+          App source
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+        <a class="link" href="../#projects">
+          More of my work
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FACTS
+       ============================================================ -->
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <header class="section__head">
+        <h2 class="section__title">The details</h2>
+      </header>
+
+      <dl class="facts">
+        <dt>Platform</dt>
+        <dd>iPhone, iOS 16.1 or later</dd>
+
+        <dt>Price</dt>
+        <dd>Free. No subscription. No in app purchases change the way Agil functions.</dd>
+
+        <dt>Status</dt>
+        <!-- TODO: update when it ships, and put the real version here. -->
+        <dd>Launching on the App Store October 15, 2026</dd>
+
+        <dt>Made by</dt>
+        <dd>Bryce Hart</dd>
+
+        <dt>Help</dt>
+        <dd><a class="link" href="help/">Support, FAQ and privacy policy</a></dd>
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; <span data-year>2026</span> Bryce Hart</p>
+    <ul class="site-footer__links">
+      <li><a href="help/">Help</a></li>
+      <li><a href="help/#privacy">Privacy</a></li>
+      <li><a href="../">brycehart.dev</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- Order matters and is preserved by `defer`. agil.js has no dependencies, so a
+     blocked or failed anime request can never break the header or footer. -->
+<script src="agil.js" defer></script>
+<script src="vendor/anime.umd.min.js" defer></script>
+<script src="agil-scroll.js" defer></script>
+<script src="agil-countdown.js" defer></script>
+</body>
+</html>
