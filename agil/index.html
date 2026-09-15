@@ -26,7 +26,7 @@
      and the fallback; the other two are lazy and are promoted to eager one beat
      before they're needed. Deliberately NOT preloading the anime bundle — it is
      deferred, and preloading it would make it compete with this image. -->
-<link rel="preload" as="image" href="../assets/agil/shots/shot-profile.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="../assets/agil/shots/shot-presets.jpg" fetchpriority="high">
 
 <meta name="theme-color" content="#FCEEF6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#130810" media="(prefers-color-scheme: dark)">
@@ -44,6 +44,7 @@
 
     <ul class="nav__links">
       <li><a href="#tour">Tour</a></li>
+      <li><a href="#ranks">Ranks</a></li>
       <li><a href="#built">How it's built</a></li>
       <li><a href="help/">Help</a></li>
     </ul>
@@ -168,24 +169,42 @@
         <div class="stage__phone">
           <div class="stage__frames" data-stage-frames>
 
-            <figure class="shot stage__shot" data-shot="0">
+            <!-- The opener: one phone that flips between the two sides, which is the
+                 thing the first beat is describing. Both faces are the same files the
+                 presets and food frames use below, so the flip costs no extra bytes.
+                 Pinned layout only: in the fallback strip those frames already show
+                 both screens, so this one would just be a duplicate. See .flip. -->
+            <figure class="shot stage__shot flip" data-shot="0">
+              <div class="flip__card">
+                <img class="flip__face" src="../assets/agil/shots/shot-presets.jpg" width="600" height="1298"
+                     fetchpriority="high" decoding="async"
+                     alt="The Lifting side of Agil. The pill at the top reads “1590/3000 cal”, today's
+                          calories from the Food side, next to a switch arrow and a coin count.">
+                <img class="flip__face flip__face--back" src="../assets/agil/shots/shot-food.jpg" width="600" height="1298"
+                     decoding="async"
+                     alt="The same app flipped to the Food side. Now the pill reads “8-wk streak”, the
+                          lifting streak, above the day's food journal.">
+              </div>
+            </figure>
+
+            <figure class="shot stage__shot" data-shot="1">
               <img src="../assets/agil/shots/shot-profile.jpg" width="600" height="1304"
-                   fetchpriority="high" decoding="async"
+                   loading="lazy" decoding="async"
                    alt="Agil's Profile tab. A pill at the top reads “Food · 0-wk streak” with a
                         switch arrow. Below it a Strategist rank row shows a bronze chess pawn,
                         “Initiate”, and “7 to Squire”, then rows for Edit Profile Card, Friends
                         (marked disabled in ghost mode), Premade Workouts and Achievements.">
             </figure>
 
-            <figure class="shot stage__shot" data-shot="1">
-              <img src="../assets/agil/shots/shot-premade.jpg" width="600" height="1304"
+            <figure class="shot stage__shot" data-shot="2">
+              <img src="../assets/agil/shots/shot-presets.jpg" width="600" height="1298"
                    loading="lazy" decoding="async"
-                   alt="The Premade Workouts sheet: “Need inspiration? Start with one of our teams
-                        researched workouts”, then Push Day — six lifts, chest, shoulders and
-                        triceps — and Full Body A.">
+                   alt="The Build tab's Presets list in the green Leaf theme: Full Body A, Push Day,
+                        Upper A, Lower A, Lower B and Cardio, each with its first few exercises,
+                        like “Barbell Back Squat, Barbell Bench Press, Seated Cable Row +3 more”.">
             </figure>
 
-            <figure class="shot stage__shot" data-shot="2">
+            <figure class="shot stage__shot" data-shot="3">
               <img src="../assets/agil/shots/shot-card.jpg" width="600" height="1304"
                    loading="lazy" decoding="async"
                    alt="The Edit Profile Card screen with Card and Character tabs. A pink profile
@@ -194,14 +213,38 @@
                         “Tap any part of your card to edit it.”">
             </figure>
 
-            <!-- SLOT: the next screenshot goes here as data-shot="3", and one beat
+            <figure class="shot stage__shot" data-shot="4">
+              <img src="../assets/agil/shots/shot-food.jpg" width="600" height="1298"
+                   loading="lazy" decoding="async"
+                   alt="The Food journal for Monday, Sep 14, 2026, in the indigo Midnight theme. A
+                        Supplements row reads “All taken today”. The summary ring shows 1,410
+                        calories left of 3,000, beside Protein, Carbs and Fat bars with grams left,
+                        and a Focus row tracks Fiber at 7 of 50 g.">
+            </figure>
+
+            <figure class="shot stage__shot" data-shot="5">
+              <img src="../assets/agil/shots/shot-progress.jpg" width="600" height="1298"
+                   loading="lazy" decoding="async"
+                   alt="The Progress tab's “Sets per muscle group” bar chart in pink: Triceps 31,
+                        Lats 29, Chest 28, Biceps 20, Side Delts 16, Quads 15, Hamstrings 12,
+                        Calves 7, Mid-Back 4, Core 3 and Lower Back 3.">
+            </figure>
+
+            <figure class="shot stage__shot" data-shot="6">
+              <img src="../assets/agil/shots/shot-records.jpg" width="600" height="1298"
+                   loading="lazy" decoding="async"
+                   alt="The Personal records screen: “37 all-time bests”. Each record card has a
+                        trophy, the lift, the date it was set, the best set and an estimated
+                        one-rep max: Tricep pushdown 6 × 230 lb (est. 276 lb), Barbell Bench
+                        Press 5 × 170 lb (est. 198 lb), and Lateral raise 7 × 140 lb per side.">
+            </figure>
+
+            <!-- SLOT: the next screenshot goes here as data-shot="7", and one beat
                  below gets pointed at it. Nothing else changes.
                  Wanted next, in priority order:
-                   3  active workout / set-by-set logging with the rest timer
-                   4  the food diary with the macro summary
-                   5  the barcode scanner
-                   6  the progress dashboard charts
-                   7  the theme picker and the home screen widget -->
+                   7  active workout / set-by-set logging with the rest timer
+                   8  the barcode scanner
+                   9  the theme picker and the home screen widget -->
 
             <span class="stage__rail" data-stage-rail aria-hidden="true"></span>
           </div>
@@ -210,16 +253,30 @@
         <!-- The scrolling column. -->
         <ol class="stage__beats">
 
-          <li class="beat" data-beat="0" data-shot="0">
-            <h3 class="beat__title" data-beat-line>Two apps in one, and the notch flips them</h3>
+          <li class="beat beat--opener" data-beat="0" data-shot="0">
+            <!-- A little replica of the pill. Decorative: the sentence below says
+                 the same thing in words. In the pinned layout it lights up in step
+                 with the flipping phone (same duration as .flip__card). -->
+            <p class="side-switch" data-beat-line aria-hidden="true">
+              <span class="side-switch__side side-switch__side--lift">Lifting</span>
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M4 8h15M15 4l4 4-4 4M20 16H5M9 12l-4 4 4 4"/></svg>
+              <span class="side-switch__side side-switch__side--food">Food</span>
+            </p>
+            <h3 class="beat__title" data-beat-line>Two tabs. One Agil.</h3>
             <p class="beat__body" data-beat-line>
-              The pill at the top of the screen shows the side you're on, plus a stat
-              from the other one. Tap it and the whole app flips between Lifting and
-              Food. Different tabs, same account, one tap apart.
+              Agil is a lifting log and a food diary living in the same app. The pill at
+              the top of the screen tells you which side you're on, and keeps one number
+              from the other side in view: today's calories while you train, your lifting
+              streak while you log lunch.
+            </p>
+            <p class="beat__body" data-beat-line>
+              Tap it and the whole app flips. New tabs, same account, same coins. Your
+              training and your eating finally live one tap apart, instead of in two
+              apps that never talk to each other.
             </p>
           </li>
 
-          <li class="beat" data-beat="1" data-shot="0">
+          <li class="beat" data-beat="1" data-shot="1">
             <h3 class="beat__title" data-beat-line>Show up. Get rewarded.</h3>
             <p class="beat__body" data-beat-line>
               The more consistent you get, the more it pays. Every distinct day you
@@ -231,7 +288,7 @@
             </p>
           </li>
 
-          <li class="beat" data-beat="2" data-shot="0">
+          <li class="beat" data-beat="2" data-shot="1">
             <span class="ghost-mark" data-draw aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 11a7 7 0 0 1 14 0v7a1.78 1.78 0 0 1 -3.1 1.4a1.65 1.65 0 0 0 -2.6 0a1.65 1.65 0 0 1 -2.6 0a1.65 1.65 0 0 0 -2.6 0a1.78 1.78 0 0 1 -3.1 -1.4v-7"/><path d="M10 10h.01"/><path d="M14 10h.01"/></svg>
             </span>
@@ -247,22 +304,22 @@
             </p>
           </li>
 
-          <li class="beat" data-beat="3" data-shot="1">
-            <h3 class="beat__title" data-beat-line>Start from a premade, or build it yourself</h3>
+          <li class="beat" data-beat="3" data-shot="2">
+            <h3 class="beat__title" data-beat-line>Build your week once, then just press start</h3>
             <p class="beat__body" data-beat-line>
-              Open a blank session and fill it in as you train, or start from a preset
-              you've already built. No inspiration today? The premade catalog has whole
-              sessions ready to add in one tap. Built by our team here at Agil, by hand. No AI.
+              Save the sessions you actually run as presets, like push day, lower B or
+              cardio, and start any of them in a tap. Or open a blank session and
+              fill it in as you train. No inspiration today? The premade catalog has whole
+              sessions ready to add, built by hand by our team here at Agil. No AI.
             </p>
             <p class="beat__body" data-beat-line>
               Log reps and weight set by set, keep per-exercise notes and target rep
-              ranges, and run the rest timer between sets. Tt still alerts you
-              with the phone locked. Unilateral lifts are tracked per side rather than
-              averaged into one number.
+              ranges, and run the rest timer between sets. It still alerts you
+              with the phone locked.
             </p>
           </li>
 
-          <li class="beat" data-beat="4" data-shot="2">
+          <li class="beat" data-beat="4" data-shot="3">
             <h3 class="beat__title" data-beat-line>An app that's yours</h3>
             <p class="beat__body" data-beat-line>
               Build a character, pick a card style, showcase the badges you care about.
@@ -271,7 +328,38 @@
             </p>
           </li>
 
-          <li class="beat" data-beat="5" data-shot="0">
+          <li class="beat" data-beat="5" data-shot="4">
+            <h3 class="beat__title" data-beat-line>Flip the notch, and it's a food diary</h3>
+            <p class="beat__body" data-beat-line>
+              Log meals against calorie and macro goals, with fiber, sugar and sodium
+              tracked alongside protein, carbs and fat. Pick a focus nutrient and it
+              gets its own row, check off the day's supplements, and log water as you go.
+            </p>
+            <p class="beat__body" data-beat-line>
+              Can't seem to remember your creatine? Agil's got you covered.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="6" data-shot="5">
+            <h3 class="beat__title" data-beat-line>See where your sets actually go</h3>
+            <p class="beat__body" data-beat-line>
+              Charts and trends from everything you've logged: training volume over
+              time, and sets per muscle group, so a lagging body part shows up as a short
+              bar instead of a hunch. It all comes from what's on your phone, and
+              it stays there.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="7" data-shot="6">
+            <h3 class="beat__title" data-beat-line>Every personal record, kept</h3>
+            <p class="beat__body" data-beat-line>
+              Each lift keeps its best set and an estimated one-rep max, with the date
+              you set it and how many sessions it took to get there. Unilateral lifts
+              are tracked per side rather than averaged into one number.
+            </p>
+          </li>
+
+          <li class="beat" data-beat="8" data-shot="1">
             <h3 class="beat__title" data-beat-line>A rank that moves on consistency, not on how much you lift</h3>
             <p class="beat__body" data-beat-line>
               The Strategist ladder runs pawn to king. It climbs on showing up, so it
@@ -285,18 +373,17 @@
               <li style="--piece: url('../assets/agil/icons/chess_queen_4.svg')"></li>
               <li style="--piece: url('../assets/agil/icons/chess_king_5.svg')"></li>
             </ul>
+            <p class="beat__note" data-beat-line>
+              <a class="link" href="#ranks">See every rank's card &darr;</a>
+            </p>
           </li>
 
-          <!-- SLOT beat 6 — needs shot 3 (active workout). Copy is ready:
+          <!-- SLOT beat: needs shot 7 (active workout). Copy is ready:
                "Log it set by set" / "Reps and weight per set, per-exercise notes and
                target rep ranges, and a rest timer that still alerts you with the phone
                locked. Finishing a workout earns coins and drives your badges."
-               SLOT beat 7 — needs shot 4 (food diary): macros plus fiber, sugar and
-               sodium; pick a focus nutrient; log water.
-               SLOT beat 8 — needs shot 5 (barcode scanner): Open Food Facts lookup,
-               add-by-hand fallback.
-               SLOT beat 9 — needs shot 6 (progress): "Charts and trends from everything
-               you've logged: volume, best lifts, and how your training is moving." -->
+               SLOT beat: needs shot 8 (barcode scanner): Open Food Facts lookup,
+               add-by-hand fallback. -->
 
         </ol>
 
@@ -306,26 +393,106 @@
 
 
   <!-- ============================================================
-       THE REST — food, barcode, widget. These read well as cards and
-       don't need a screen each.
+       RANKS — one real profile card per rung of the ladder. The images
+       are the whole content; the captions carry the names so the list
+       still reads with images off.
+       ============================================================ -->
+  <section class="section section--alt" id="ranks" aria-labelledby="ranks-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">The Strategist ladder</p>
+        <h2 class="section__title" id="ranks-title">From Initiate to Legend</h2>
+        <p class="section__sub">
+          Your rank climbs on consistency, and every rank dresses your profile card a
+          little louder: a new ring, a new piece, room for more badges. It's the one
+          thing friends see, so it's the one thing worth showing off.
+        </p>
+      </header>
+
+      <ol class="ranks">
+        <li class="rank">
+          <figure>
+            <img src="../assets/agil/cards/card-initiate.jpg" width="480" height="793" loading="lazy" decoding="async"
+                 alt="The Initiate profile card: plain black with a thin pink border and a copper pawn in a grey ring.">
+            <figcaption>
+              <span class="rank__piece" style="--piece: url('../assets/agil/icons/chess_pawn_0.svg')" aria-hidden="true"></span>
+              <span class="rank__name">Initiate</span>
+              <span class="rank__tier">Pawn</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="rank">
+          <figure>
+            <img src="../assets/agil/cards/card-squire.jpg" width="480" height="793" loading="lazy" decoding="async"
+                 alt="The Squire profile card: deep green with a silver bishop, its ring partly filled, and two showcased badges.">
+            <figcaption>
+              <span class="rank__piece" style="--piece: url('../assets/agil/icons/chess_bishop_1.svg')" aria-hidden="true"></span>
+              <span class="rank__name">Squire</span>
+              <span class="rank__tier">Bishop</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="rank">
+          <figure>
+            <img src="../assets/agil/cards/card-warrior.jpg" width="480" height="793" loading="lazy" decoding="async"
+                 alt="The Warrior profile card: dusky purple with falling rain, a gold knight in a gold ring, and three badges.">
+            <figcaption>
+              <span class="rank__piece" style="--piece: url('../assets/agil/icons/chess_knight_2.svg')" aria-hidden="true"></span>
+              <span class="rank__name">Warrior</span>
+              <span class="rank__tier">Knight</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="rank">
+          <figure>
+            <img src="../assets/agil/cards/card-gladiator.jpg" width="480" height="793" loading="lazy" decoding="async"
+                 alt="The Gladiator profile card: graphite gradient with an icy blue rook inside a ticked, dashed ring.">
+            <figcaption>
+              <span class="rank__piece" style="--piece: url('../assets/agil/icons/chess_rook_3.svg')" aria-hidden="true"></span>
+              <span class="rank__name">Gladiator</span>
+              <span class="rank__tier">Rook</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="rank">
+          <figure>
+            <img src="../assets/agil/cards/card-centurion.jpg" width="480" height="793" loading="lazy" decoding="async"
+                 alt="The Centurion profile card: a starfield with a swirling galaxy and a sparkling platinum queen.">
+            <figcaption>
+              <span class="rank__piece" style="--piece: url('../assets/agil/icons/chess_queen_4.svg')" aria-hidden="true"></span>
+              <span class="rank__name">Centurion</span>
+              <span class="rank__tier">Queen</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="rank">
+          <figure>
+            <img src="../assets/agil/cards/card-legend.jpg" width="480" height="793" loading="lazy" decoding="async"
+                 alt="The Legend profile card: a purple-to-green aurora sky with a shooting star, a glowing pink king, and four sparkling pink badges.">
+            <figcaption>
+              <span class="rank__piece" style="--piece: url('../assets/agil/icons/chess_king_5.svg')" aria-hidden="true"></span>
+              <span class="rank__name">Legend</span>
+              <span class="rank__tier">King</span>
+            </figcaption>
+          </figure>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       THE REST — barcode, badges, widget, friends. These read well as
+       cards and don't need a screen each.
        ============================================================ -->
   <section class="section">
     <div class="wrap">
       <header class="section__head">
-        <p class="eyebrow">And on the food side</p>
-        <h2 class="section__title">The other half of the app</h2>
+        <p class="eyebrow">And the rest</p>
+        <h2 class="section__title">The small things that add up</h2>
       </header>
 
       <div class="grid">
-
-        <article class="card">
-          <h3 class="card__title">Food and macros</h3>
-          <p class="card__body">
-            Log meals against calorie and macro goals, with fiber, sugar and sodium
-            tracked alongside protein, carbs and fat. Can't seem to remember to take your creatine?
-            Agils got you covered. Pick a focus nutrient and Agil can remind you to keep you on track.
-          </p>
-        </article>
 
         <article class="card">
           <h3 class="card__title">Barcode scanning</h3>
@@ -335,16 +502,6 @@
             <a class="link" href="https://world.openfoodfacts.org/">Open Food Facts</a>
             database. Anything it doesn't know, you can add by hand and keep in your
             own library.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3 class="card__title">Progress worth reading</h3>
-          <p class="card__body">
-            Charts and trends from everything you've logged: training volume, your
-            best lifts, estimated one-rep maxes, and how the whole thing is moving
-            over months rather than days. A summary of what you've achieved, always 
-            private.
           </p>
         </article>
 
@@ -453,7 +610,7 @@
           bodyweight stay in the app's own storage on your phone unless you
           deliberately leave Ghost Mode, and even then, all that leaves is your
           profile card. 
-          <a class="link" href="help/#privacy">privacy policy</a> spells out exactly
+          The <a class="link" href="help/#privacy">privacy policy</a> spells out exactly
           what that includes.
         </p>
       </div>

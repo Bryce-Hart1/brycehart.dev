@@ -1018,6 +1018,84 @@ svg {
 }
 .ladder li:first-child { background-color: var(--text-faint); }
 
+/* Rank cards — the ladder's six rungs as the real profile cards. Phones get a
+   swipeable strip that bleeds to the screen edges (the strip scrolls, the page
+   never does); wider screens get a grid, and the full row steps upward left to
+   right so the section reads as a climb. The stagger is layout, not motion, so
+   reduced-motion visitors keep it. */
+.ranks {
+  list-style: none;
+  padding: 0 var(--sp-6) var(--sp-4);
+  margin-inline: calc(var(--sp-6) * -1);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(70vw, 260px);
+  gap: var(--sp-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--sp-6);
+  overscroll-behavior-x: contain;
+}
+.rank { scroll-snap-align: start; }
+.rank figure { margin: 0; }
+.rank img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: #0B0B0F;   /* every card is dark; avoids a white flash while decoding */
+}
+.rank figcaption {
+  margin-top: var(--sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.rank__piece {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  background-color: var(--accent);
+  -webkit-mask: var(--piece) center / contain no-repeat;
+          mask: var(--piece) center / contain no-repeat;
+}
+.rank__name { font-weight: 600; color: var(--text); }
+.rank__tier { margin-left: auto; font-size: 0.75rem; color: var(--text-faint); }
+
+@media (min-width: 48rem) {
+  .ranks {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-8) var(--sp-6);
+    overflow: visible;
+    margin-inline: 0;
+    padding: 0;
+  }
+}
+
+@media (min-width: 64rem) {
+  .ranks {
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--sp-4);
+    padding-bottom: calc(var(--sp-2) * 5);   /* room for the lowest rung */
+  }
+  .rank { transform: translateY(calc((5 - var(--i, 0)) * var(--sp-2))); }
+  .rank:nth-child(2) { --i: 1; }
+  .rank:nth-child(3) { --i: 2; }
+  .rank:nth-child(4) { --i: 3; }
+  .rank:nth-child(5) { --i: 4; }
+  .rank:nth-child(6) { --i: 5; }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .rank img { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .rank:hover img { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+}
+
 /* Ghost mark for the privacy beat — inline SVG (not an <img>) because its
    stroke gets drawn on by anime.createDrawable, which needs the path in the
    document. Stroked, not filled, which is what makes a draw-on legible. */
@@ -1028,6 +1106,108 @@ svg {
   margin-bottom: var(--sp-4);
 }
 .ghost-mark svg { width: 100%; height: 100%; }
+
+/* The opener's flipping phone. Pinned layout only: in the fallback strip the
+   presets and food frames already show both screens, so this frame would be a
+   duplicate there. The front face is never hidden by anything; the back face
+   is a CSS-only overlay that fades in while the card is edge-on, so even a
+   stalled animation leaves a real screenshot showing. The flip turns to 90deg,
+   swaps faces, and turns back from -90deg, which avoids a mirrored back face
+   and any backface-visibility quirks inside the clipped frame. */
+.flip { display: none; }
+.js-stage .flip { display: grid; }
+
+.flip__card {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+.flip__face { grid-area: 1 / 1; }
+.flip__face--back { opacity: 0; }
+
+/* 6s loop: hold Lifting, flip, hold Food, flip back. Paused unless the opener
+   is the frame showing (the stage has no data-shot until the first swap, and
+   "0" once you scroll back up). The pill replica pauses and runs on exactly
+   the same condition, so the two never drift apart. */
+.js-stage .flip__card,
+.js-stage .flip__face--back,
+.js-stage .side-switch__side {
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-play-state: paused;
+}
+.js-stage .flip__card        { animation-name: flip-card; }
+.js-stage .flip__face--back  { animation-name: flip-back; animation-timing-function: step-end; }
+.js-stage .side-switch__side--lift { animation-name: side-lift; animation-timing-function: step-end; }
+.js-stage .side-switch__side--food { animation-name: side-food; animation-timing-function: step-end; }
+
+.js-stage .stage:not([data-shot]) :is(.flip__card, .flip__face--back, .side-switch__side),
+.js-stage .stage[data-shot="0"]   :is(.flip__card, .flip__face--back, .side-switch__side) {
+  animation-play-state: running;
+}
+
+@keyframes flip-card {
+  0%, 38%   { transform: perspective(1400px) rotateY(0deg); }
+  45%       { transform: perspective(1400px) rotateY(90deg); }
+  45.01%    { transform: perspective(1400px) rotateY(-90deg); }
+  52%, 88%  { transform: perspective(1400px) rotateY(0deg); }
+  95%       { transform: perspective(1400px) rotateY(90deg); }
+  95.01%    { transform: perspective(1400px) rotateY(-90deg); }
+  100%      { transform: perspective(1400px) rotateY(0deg); }
+}
+@keyframes flip-back {
+  0%   { opacity: 0; }
+  45%  { opacity: 1; }
+  95%  { opacity: 0; }
+}
+
+/* The pill replica in the opener beat. */
+.side-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-1);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  width: fit-content;
+}
+.side-switch svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: var(--text-faint);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.side-switch__side {
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: 999px;
+  color: var(--text-muted);
+}
+/* Static state (fallback, no motion): Lifting is the side you're on. */
+.side-switch__side--lift { background: var(--accent-btn); color: var(--on-accent); }
+
+@keyframes side-lift {
+  0%   { background: var(--accent-btn); color: var(--on-accent); }
+  45%  { background: transparent; color: var(--text-muted); }
+  95%  { background: var(--accent-btn); color: var(--on-accent); }
+}
+@keyframes side-food {
+  0%   { background: transparent; color: var(--text-muted); }
+  45%  { background: var(--accent-btn); color: var(--on-accent); }
+  95%  { background: transparent; color: var(--text-muted); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip__card, .flip__face--back, .side-switch__side { animation: none !important; }
+}
 
 
 /* --- Pinned variant ------------------------------------------------------ */
@@ -1156,6 +1336,7 @@ svg {
     justify-content: center;
   }
   .js-stage .stage__shot { grid-area: auto; opacity: 1; }
+  .js-stage .flip { display: none; }
   .js-stage .beat {
     min-height: 0;
     border-left: 0;
