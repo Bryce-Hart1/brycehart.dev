@@ -46,6 +46,18 @@
   </nav>
 </header>
 
+<!-- Chapter rail: wide screens only, and only once main.js has wired it up
+     (it stays display:none without the data-ready attribute). -->
+<nav class="rail" aria-label="Project chapters" data-rail>
+  <ol>
+    <li><a href="#emulator"><span class="rail__dot"></span><span class="rail__label">CPU Emulator</span></a></li>
+    <li><a href="#agil"><span class="rail__dot"></span><span class="rail__label">Agil</span></a></li>
+    <li><a href="#castle"><span class="rail__dot"></span><span class="rail__label">castle+</span></a></li>
+    <li><a href="#bstd"><span class="rail__dot"></span><span class="rail__label">b-standard</span></a></li>
+    <li><a href="#swiftsearch"><span class="rail__dot"></span><span class="rail__label">SwiftSearch</span></a></li>
+  </ol>
+</nav>
+
 <main id="main">
 
   <!-- ============================================================
@@ -82,158 +94,310 @@
         <a class="btn" href="assets/resume.pdf">Resume</a>
         <a class="btn" href="https://github.com/Bryce-Hart1">GitHub</a>
       </div>
+
+      <nav class="hero__index" aria-label="Projects">
+        <ol>
+          <li><a href="#emulator"><span>01</span> CPU Emulator</a></li>
+          <li><a href="#agil"><span>02</span> Agil</a></li>
+          <li><a href="#castle"><span>03</span> castle+</a></li>
+          <li><a href="#bstd"><span>04</span> b-standard</a></li>
+          <li><a href="#swiftsearch"><span>05</span> SwiftSearch</a></li>
+        </ol>
+      </nav>
     </div>
   </section>
 
 
   <!-- ============================================================
-       PROJECTS — the reason the site exists.
-       To add one: copy an <article class="card"> block and edit it.
+       PROJECTS — one full-width chapter per project.
+       Each chapter restyles itself by overriding the color/type tokens
+       on its own .chapter--x class (see section 7 of styles.css), so the
+       shared .link / .tags / .btn pick up its palette automatically.
+       To add one: copy a <section class="chapter"> block, give it a new
+       .chapter--x modifier and id, add a rail link, and bump the "/ 05"s.
        Order matters. Strongest project first.
        ============================================================ -->
-  <section class="section" id="projects">
-    <div class="wrap">
-      <header class="section__head">
-        <h2 class="section__title">Projects</h2>
-      </header>
+  <div class="chapters" id="projects">
+    <h2 class="visually-hidden">Projects</h2>
 
-      <div class="grid">
-
-        <!-- ---------- CPU Emulator ---------- -->
-        <article class="card">
-          <div class="card__head">
-            <h3 class="card__title">CPU Emulator</h3>
-            <span class="card__year">2025-2026</span>
-          </div>
-          <p class="card__body">
+    <!-- ---------- 01 CPU Emulator ---------- -->
+    <section class="chapter chapter--emu" id="emulator" aria-labelledby="emulator-title">
+      <div class="wrap chapter__grid">
+        <div class="chapter__text">
+          <p class="chapter__index"><span>01</span> / 05 <span class="chapter__year">2025–2026</span></p>
+          <h3 class="chapter__title" id="emulator-title">CPU Emulator</h3>
+          <p class="chapter__body">
             My first real Rust project that has a custom instruction set, that I call EM
-            (Emulator Machine code). It's able to run simple programs step by step over a BIOS 
-            layer that I compiled with the assembler, which is also included. This is all displayed 
-            in a Raylib window. This is accompanied by a supporting Python app that allows you to write 
+            (Emulator Machine code). It's able to run simple programs step by step over a BIOS
+            layer that I compiled with the assembler, which is also included. This is all displayed
+            in a Raylib window. This is accompanied by a supporting Python app that allows you to write
             your own programs in EM.
           </p>
           <ul class="tags" aria-label="Technologies used">
-            <li>C++, Rust, Raylib, Python</li>
+            <li>Rust</li>
+            <li>C++</li>
+            <li>Raylib</li>
+            <li>Python</li>
             <li>Cargo</li>
           </ul>
-          <div class="card__links">
+          <div class="chapter__links">
             <a class="link" href="https://github.com/Bryce-Hart1/CPU_Emulator">
               Source
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
-            <!-- Optional: add a live demo, a writeup, or a demo GIF link here. -->
           </div>
-        </article>
+        </div>
+
+        <!-- Decorative: a register panel and a listing whose highlight steps
+             down one instruction at a time, the PC counting along with it. -->
+        <div class="chapter__visual emu" aria-hidden="true">
+          <div class="emu__bar">
+            <span>em-vm</span>
+            <span>RUN · STEP</span>
+          </div>
+          <div class="emu__body">
+            <dl class="emu__regs">
+              <div><dt>PC</dt><dd class="emu__pc"></dd></div>
+              <div><dt>ACC</dt><dd>0x002A</dd></div>
+              <div><dt>SP</dt><dd>0x0FF0</dd></div>
+              <div><dt>FLAGS</dt><dd>Z&middot;C&middot;<b>N</b></dd></div>
+            </dl>
+            <!-- TODO: swap in real EM instructions from the CPU_Emulator repo. -->
+            <ol class="emu__listing">
+              <li><span>0000</span>LOAD  R0, #0x10</li>
+              <li><span>0001</span>LOAD  R1, #0x01</li>
+              <li><span>0002</span>ADD   R0, R1</li>
+              <li><span>0003</span>STORE R0, [0x80]</li>
+              <li><span>0004</span>CMP   R0, #0x20</li>
+              <li><span>0005</span>JNE   0x0002</li>
+              <li><span>0006</span>CALL  BIOS_PUTC</li>
+              <li><span>0007</span>HALT</li>
+            </ol>
+          </div>
+          <p class="emu__prompt">&gt; step<span class="emu__cursor"></span></p>
+        </div>
+      </div>
+    </section>
 
 
-        <!-- ---------- Agil ---------- -->
-        <article class="card">
-          <div class="card__head">
-            <h3 class="card__title">Agil</h3>
-            <span class="card__year">2026</span>
-          </div>
-          <p class="card__body">
-            This is my first production app that I ever built! It features a Rust backend and Swift 
+    <!-- ---------- 02 Agil ---------- -->
+    <section class="chapter chapter--agil" id="agil" aria-labelledby="agil-title">
+      <div class="wrap chapter__grid">
+        <div class="chapter__text">
+          <p class="chapter__index"><span>02</span> / 05 <span class="chapter__year">2026</span></p>
+          <h3 class="chapter__title" id="agil-title">Agil</h3>
+          <p class="chapter__body">
+            This is my first production app that I ever built! It features a Rust backend and Swift
             frontend. I was tired of all these fitness apps locking features of their apps behind paywalls.
             So I built my own. No paywalls or monthly subscriptions.
           </p>
           <ul class="tags" aria-label="Technologies used">
-            <li>Swift, Rust, Python</li>
+            <li>Swift</li>
+            <li>Rust</li>
+            <li>Python</li>
             <li>Open Food Facts</li>
           </ul>
-          <div class="card__links">
-            <a class="link" href="agil/">
-              Agil site
+          <div class="chapter__links">
+            <a class="btn btn--primary" href="agil/">
+              Visit the Agil site
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
             </a>
             <a class="link" href="https://github.com/Bryce-Hart1/Agil_app">
-              App
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- ---------- Castle Plus ---------- -->
-        <article class="card">
-          <div class="card__head">
-            <h3 class="card__title">Castle Plus</h3>
-            <span class="card__year">2026</span>
-          </div>
-          <p class="card__body">
-            castle+ is a from-scratch C++ reverse proxy and process supervisor built directly on `epoll`
-             that terminates TLS, routes HTTP traffic to backend services it launches and health-checks itself, 
-             and streams request bodies of any size with bounded memory. It includes production-grade hardening like per-IP rate limiting,
-             live certificate reloads, and a Unix-socket admin control plane, and runs today on my home server on my
-            Lenovo ThinkCentre, which you can find a link for 
-            the linkedin post I made when I built it below.
-          </p>
-          <ul class="tags" aria-label="Technologies used">
-            <li>C++</li>
-          </ul>
-          <div class="card__links">
-            <a class="link" href="https://github.com/Bryce-Hart1/castle_plus">
               Source
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
           </div>
-        </article>
+        </div>
 
-        <!-- ---------- library ---------- -->
-        <article class="card">
-          <div class="card__head">
-            <h3 class="card__title">b-standard</h3>
-            <span class="card__year">2025</span>
+        <!-- Decorative: the progress screen in a phone frame, with three of
+             the rank cards fanned out behind it. -->
+        <div class="chapter__visual agil-stage" aria-hidden="true">
+          <img class="agil-stage__card agil-stage__card--1" src="assets/agil/cards/card-squire.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
+          <img class="agil-stage__card agil-stage__card--2" src="assets/agil/cards/card-gladiator.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
+          <img class="agil-stage__card agil-stage__card--3" src="assets/agil/cards/card-legend.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
+          <div class="agil-stage__phone">
+            <img src="assets/agil/shots/shot-progress.jpg" alt="" width="600" height="1298" loading="lazy" decoding="async">
           </div>
-          <p class="card__body">
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ---------- 03 castle+ ---------- -->
+    <section class="chapter chapter--castle" id="castle" aria-labelledby="castle-title">
+      <div class="wrap chapter__grid">
+        <div class="chapter__text">
+          <p class="chapter__index"><span>03</span> / 05 <span class="chapter__year">2026</span></p>
+          <h3 class="chapter__title" id="castle-title">castle+</h3>
+          <p class="chapter__body">
+            castle+ is a from-scratch C++ reverse proxy and process supervisor built directly on <code>epoll</code>
+            that terminates TLS, routes HTTP traffic to backend services it launches and health-checks itself,
+            and streams request bodies of any size with bounded memory. It includes production-grade hardening like per-IP rate limiting,
+            live certificate reloads, and a Unix-socket admin control plane, and runs today on my home server on my
+            Lenovo ThinkCentre.
+          </p>
+          <p class="chapter__note">
+            <span class="status-dot" aria-hidden="true"></span>
+            You're reading this page through castle+.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>C++</li>
+            <li>epoll</li>
+            <li>TLS</li>
+          </ul>
+          <div class="chapter__links">
+            <a class="link" href="https://github.com/Bryce-Hart1/castle_plus">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <!-- TODO: link the LinkedIn post about castle+ here:
+            <a class="link" href="https://www.linkedin.com/posts/...">
+              LinkedIn post
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a> -->
+          </div>
+        </div>
+
+        <!-- Decorative: requests arriving on :443 and fanning out to the two
+             backends castle+ supervises, over a blueprint grid. -->
+        <div class="chapter__visual castle" aria-hidden="true">
+          <svg class="castle__map" viewBox="0 0 480 260" focusable="false">
+            <path class="castle__wire" d="M100 130H200"/>
+            <path class="castle__wire" d="M300 130L380 60"/>
+            <path class="castle__wire" d="M300 130L380 200"/>
+
+            <g class="castle__node">
+              <rect x="10" y="110" width="90" height="40" rx="6"/>
+              <text x="55" y="130">client</text>
+            </g>
+            <text class="castle__tls" x="150" y="118">:443 TLS</text>
+            <g class="castle__node castle__node--core">
+              <rect x="200" y="100" width="100" height="60" rx="8"/>
+              <text x="250" y="130">castle+</text>
+            </g>
+            <g class="castle__node">
+              <rect x="380" y="40" width="94" height="40" rx="6"/>
+              <text x="427" y="60">site</text>
+            </g>
+            <g class="castle__node">
+              <rect x="380" y="180" width="94" height="40" rx="6"/>
+              <text x="427" y="200">agil-api</text>
+            </g>
+
+            <circle class="castle__pkt castle__pkt--in"   r="4"/>
+            <circle class="castle__pkt castle__pkt--in2"  r="4"/>
+            <circle class="castle__pkt castle__pkt--site" r="4"/>
+            <circle class="castle__pkt castle__pkt--api"  r="4"/>
+          </svg>
+          <ol class="castle__log">
+            <li><b>200</b> GET  /            site      0.4ms</li>
+            <li><b>200</b> GET  /agil/       site      0.6ms</li>
+            <li><b>200</b> POST /v1/sync     agil-api  3.1ms</li>
+            <li class="castle__log--warn"><b>429</b> GET  /wp-login.php  rate-limited</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ---------- 04 b-standard ---------- -->
+    <section class="chapter chapter--bstd" id="bstd" aria-labelledby="bstd-title">
+      <div class="wrap chapter__grid">
+        <div class="chapter__text">
+          <p class="chapter__index"><span>04</span> / 05 <span class="chapter__year">2025</span></p>
+          <h3 class="chapter__title" id="bstd-title">b-standard</h3>
+          <p class="chapter__body">
             This is my go-to library for when I build anything that I believe is reusable in other projects,
-            or I feel like learning how a real system or library works. Includes pieces of ASM, C++, C and 
+            or I feel like learning how a real system or library works. Includes pieces of ASM, C++, C and
             Rust.
           </p>
           <ul class="tags" aria-label="Technologies used">
-            <li>Rust, C++</li>
+            <li>Rust</li>
+            <li>C++</li>
+            <li>C</li>
+            <li>ASM</li>
           </ul>
-          <div class="card__links">
+          <div class="chapter__links">
             <a class="link" href="https://github.com/Bryce-Hart1/bstd">
               Source
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
           </div>
-        </article>
+        </div>
 
-        <!-- ---------- SwiftSearch ---------- -->
+        <!-- Decorative: the library as a man page. -->
+        <div class="chapter__visual man" aria-hidden="true">
+          <div class="man__rule"><span>BSTD(3)</span><span>Library Functions Manual</span><span>BSTD(3)</span></div>
+          <p class="man__h">NAME</p>
+          <p class="man__p"><b>bstd</b> — the pieces worth writing once and reusing everywhere</p>
+          <p class="man__h">SYNOPSIS</p>
+          <p class="man__p man__code">use bstd::*;<br>#include &lt;bstd.h&gt;<span class="man__cursor"></span></p>
+          <p class="man__h">DESCRIPTION</p>
+          <p class="man__p">Reusable building blocks, and from-scratch rebuilds of real systems and libraries to learn how they work.</p>
+          <p class="man__h">LANGUAGES</p>
+          <p class="man__p">Rust, C++, C, assembly.</p>
+          <div class="man__rule man__rule--foot"><span>brycehart.dev</span><span>2025</span><span>BSTD(3)</span></div>
+        </div>
+      </div>
+    </section>
 
-        <article class="card">
-          <div class="card__head">
-            <h3 class="card__title">SwiftSearch</h3>
-            <span class="card__year">2025</span>
-          </div>
-          <p class="card__body">
+
+    <!-- ---------- 05 SwiftSearch ---------- -->
+    <section class="chapter chapter--swift" id="swiftsearch" aria-labelledby="swiftsearch-title">
+      <div class="wrap chapter__grid">
+        <div class="chapter__text">
+          <p class="chapter__index"><span>05</span> / 05 <span class="chapter__year">2025</span></p>
+          <h3 class="chapter__title" id="swiftsearch-title">SwiftSearch</h3>
+          <p class="chapter__body">
             My first big project I ever did, mainly to help me learn multithread design
             after I took Operating Systems. It uses available threads to perform a search operation
-            to find words or phrases in a series of files. To test this I created a Python Script to 
+            to find words or phrases in a series of files. To test this I created a Python Script to
             autogenerate files for testing.
           </p>
           <ul class="tags" aria-label="Technologies used">
-            <li>multithreading, C++, Python</li>
+            <li>C++</li>
+            <li>multithreading</li>
+            <li>Python</li>
           </ul>
-          <div class="card__links">
+          <div class="chapter__links">
             <a class="link" href="https://github.com/Bryce-Hart1/swiftSearch">
               Source
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
           </div>
-        </article>
+        </div>
 
+        <!-- Decorative: one lane per worker thread, each scanning its share of
+             files at its own pace. --d is the lane's period, --o its phase,
+             --s where its scan rests when motion is off; --x places a hit. -->
+        <div class="chapter__visual lanes" aria-hidden="true">
+          <p class="lanes__cmd">$ swiftsearch "needle" ./corpus <span class="lanes__flag">--threads 8</span></p>
+          <ol class="lanes__list">
+            <li style="--d:3.1s; --o:-0.4s; --s:.72"><span>T0</span><span class="lanes__track"><i style="--x:.18"></i><i style="--x:.64"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:2.6s; --o:-1.9s; --s:.35"><span>T1</span><span class="lanes__track"><i style="--x:.41"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:3.6s; --o:-2.2s; --s:.88"><span>T2</span><span class="lanes__track"><i style="--x:.27"></i><i style="--x:.52"></i><i style="--x:.83"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:2.9s; --o:-0.9s; --s:.50"><span>T3</span><span class="lanes__track"><i style="--x:.70"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:3.3s; --o:-2.8s; --s:.21"><span>T4</span><span class="lanes__track"><i style="--x:.12"></i><i style="--x:.47"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:2.4s; --o:-1.1s; --s:.63"><span>T5</span><span class="lanes__track"><i style="--x:.58"></i><i style="--x:.91"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:3.8s; --o:-3.0s; --s:.94"><span>T6</span><span class="lanes__track"><i style="--x:.33"></i><span class="lanes__scan"></span></span></li>
+            <li style="--d:2.7s; --o:-0.2s; --s:.44"><span>T7</span><span class="lanes__track"><i style="--x:.24"></i><i style="--x:.76"></i><span class="lanes__scan"></span></span></li>
+          </ol>
+          <ol class="lanes__out">
+            <li><span>corpus/file_0193.txt:42:</span> …found the <b>needle</b> in line…</li>
+            <li><span>corpus/file_0388.txt:7:</span> …another <b>needle</b> here…</li>
+          </ol>
+        </div>
       </div>
+    </section>
 
-      <p class="section__foot">
-        <a class="link" href="https://github.com/Bryce-Hart1?tab=repositories">
-          Everything else on GitHub
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
-      </p>
-    </div>
-  </section>
+  </div>
+
+  <p class="chapters__foot">
+    <a class="link" href="https://github.com/Bryce-Hart1?tab=repositories">
+      Everything else on GitHub
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+  </p>
 
 
   <!-- ============================================================
