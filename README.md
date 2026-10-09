@@ -83,6 +83,11 @@ exception on purpose: each one wears its own palette.
 
 ## Deploying
 
+`./deploy.sh` pushes, then fast-forwards the server's checkout. Cloudflare caches
+CSS, JS and images for up to 4 hours but not the HTML, so when you change
+`styles.css`, `main.js` or the favicon, bump the `?v=` on their links in `index.html`
+and `404.html`. Otherwise visitors get new HTML with stale styles.
+
 The site is static, so any host works. Nothing here assumes a particular one.
 
 **GitHub Pages** — push to a repo named `Bryce-Hart1.github.io` and it's live at that
