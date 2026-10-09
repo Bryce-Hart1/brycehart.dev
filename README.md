@@ -62,14 +62,14 @@ Changing `--accent` recolors the site. `--font-sans` and `--font-mono` currently
 the system stack, which costs nothing to load; swap in a webfont if you want more
 personality.
 
-The palette is earthy and there is exactly one of it — no light/dark toggle. Warm paper
-background, umber text, terracotta accent, moss-green status dot. Two things keep it
-coherent if you start changing colors:
+The palette is midnight on cream and there is exactly one of it — no light/dark toggle.
+Cream paper background, midnight-blue text and accent, moss-green status dot. Two things
+keep it coherent if you start changing colors:
 
-- Nothing is a true grey. Every neutral carries a warm cast, so a stock `#888` will look
-  conspicuously dead next to them.
-- Shadows are tinted with the umber from `--text`, not black. Pure black over warm paper
-  turns into a grey smudge.
+- Nothing is a true grey. Every text and border neutral carries a blue cast, so a stock
+  `#888` will look conspicuously dead next to them.
+- Shadows are tinted with the midnight from `--text`, not black. Pure black over cream
+  paper turns into a grey smudge.
 
 `color-scheme: light` is declared so browsers don't render scrollbars and form controls
 in dark chrome for visitors whose OS is set to dark mode.
@@ -78,7 +78,7 @@ If you change `--bg`, also update the `theme-color` meta tag in `index.html` —
 the browser UI on mobile. (While a chapter is on screen, `main.js` swaps it to that
 chapter's `--bg`, and restores it afterwards.)
 
-The earthy palette is the frame (hero, About, Contact). The project chapters are the
+The midnight palette is the frame (hero, About, Contact). The project chapters are the
 exception on purpose: each one wears its own palette.
 
 ## Deploying

@@ -19,21 +19,21 @@
 /* 1. Tokens ---------------------------------------------------------------- */
 
 :root {
-  /* Earthy palette. Warm paper, umber ink, terracotta accent, moss for the
-     status dot. Every hue is warm — nothing here is a neutral grey. */
-  --bg:            #faf6f0;  /* warm paper   */
+  /* Midnight palette. Cream paper, midnight-blue ink and accent, moss for the
+     status dot. Neutrals carry a blue cast rather than a flat grey. */
+  --bg:            #faf6f0;  /* cream paper  */
   --bg-alt:        #f2ebe1;  /* sand         */
   --surface:       #fffdfa;  /* raised card  */
-  --border:        #e5dbcc;
-  --border-strong: #cbbca7;
+  --border:        #dfe0e8;
+  --border-strong: #b8bccc;
 
-  --text:          #2c2418;  /* dark umber   */
-  --text-muted:    #6b5d4b;  /* walnut       */
-  --text-faint:    #786954;  /* driftwood — as light as it can go and still
-                                clear 4.5:1 on --bg-alt, the worst case  */
+  --text:          #121a33;  /* midnight ink */
+  --text-muted:    #485270;  /* dusk slate   */
+  --text-faint:    #5c6580;  /* as light as it can go and still clear 4.5:1
+                                on --bg-alt, the worst case */
 
-  --accent:        #9a5b34;  /* terracotta   */
-  --accent-hover:  #7d4726;  /* burnt sienna */
+  --accent:        #1f2d6b;  /* midnight blue */
+  --accent-hover:  #141e4d;  /* deeper night  */
 
   --success:       #5b7a4a;  /* moss         */
 
@@ -57,10 +57,10 @@
   --radius: 10px;
   --radius-sm: 6px;
 
-  /* Shadows are tinted with the umber from --text, never pure black. Pure black
-     over warm paper reads as grey smudge. */
-  --shadow: 0 1px 2px rgb(44 36 24 / 0.05), 0 4px 16px -6px rgb(44 36 24 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(44 36 24 / 0.06), 0 12px 32px -10px rgb(44 36 24 / 0.20);
+  /* Shadows are tinted with the midnight from --text, never pure black. Pure
+     black over cream paper reads as grey smudge. */
+  --shadow: 0 1px 2px rgb(18 26 51 / 0.05), 0 4px 16px -6px rgb(18 26 51 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(18 26 51 / 0.06), 0 12px 32px -10px rgb(18 26 51 / 0.20);
 
   --measure: 68ch;   /* comfortable reading width */
   --page: 1080px;    /* max content width */
