@@ -9,7 +9,7 @@
      4. Header / nav
      5. Hero
      6. Sections
-     7. Project chapters (7a–7e: one block per project)
+     7. Project chapters (7a–7f: one block per project)
      8. About / contact
      9. Footer
     10. Motion & print
@@ -358,7 +358,7 @@ svg {
 /* 7. Project chapters ------------------------------------------------------ */
 
 /* Each project is a full-bleed chapter. A chapter restyles itself by
-   redefining the section 1 tokens on its .chapter--x class (7a–7e below), so
+   redefining the section 1 tokens on its .chapter--x class (7a–7f below), so
    .link, .tags, .btn and the focus ring all wear its palette for free. Every
    chapter palette keeps body text and links at 4.5:1 or better on its --bg. */
 
@@ -1074,6 +1074,110 @@ svg {
 .lanes__out b { color: var(--accent); font-weight: 600; }
 
 
+/* 7f. Bowl Street Journal — the app's Windows XP desktop ------------------ */
+
+/* Glosses lifted from the app's own stylesheet (--title-gloss, --green-gloss,
+   --sky, --grass). The sky and hills are decoration: all text sits in a
+   near-white window, where ink and links clear 4.5:1. --bg is the sky's
+   midpoint so the mobile browser chrome matches it. */
+.chapter--bsj {
+  --bg:            #3a87dc;
+  --bg-alt:        #e4eefa;
+  --surface:       #ffffff;
+  --border:        #bcd2ee;
+  --border-strong: #86a8d6;
+  --text:          #0f2a57;
+  --text-muted:    #33507e;
+  --text-faint:    #4d6890;
+  --accent:        #1a56c4;
+  --accent-hover:  #123f94;
+  --font-display:  "Trebuchet MS", Tahoma, var(--font-sans);
+  --xp-title:      linear-gradient(#4a9ff0, #2168db 50%, #1c5fd2 54%, #3a86e8);
+  --xp-start:      linear-gradient(#3f9a30, #2b7f1d 48%, #236e16 52%, #2a7d1e);
+  background:
+    radial-gradient(150% 48% at 22% 104%, #5cb535 0 50%, transparent 52%),
+    radial-gradient(120% 40% at 92% 106%, #43a024 0 50%, transparent 52%),
+    radial-gradient(28% 10% at 80% 14%, rgb(255 255 255 / 0.6), transparent 70%),
+    radial-gradient(22% 8% at 16% 8%, rgb(255 255 255 / 0.45), transparent 70%),
+    linear-gradient(#1d6bd0, #4c97e6 40%, #a6d1f6 72%);
+}
+
+/* No visual here: one window, centered on the desktop. */
+.chapter--bsj .chapter__grid { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+.chapter--bsj .chapter__text { width: 100%; max-width: 40rem; }
+
+.chapter--bsj .chapter__title { font-weight: 700; letter-spacing: -0.01em; }
+
+.chapter--bsj .tags li {
+  border-color: var(--border-strong);
+  border-radius: 3px;
+  background: linear-gradient(#ffffff, var(--bg-alt));
+}
+
+/* The Start button: its label sits on the middle of the gloss, 5.1–6.3:1. */
+.chapter--bsj .btn--primary {
+  border-color: #1d6312;
+  border-radius: 6px 20px 20px 6px;
+  background: var(--xp-start);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.45);
+  font-style: italic;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgb(0 40 0 / 0.5);
+}
+.chapter--bsj .btn--primary:hover {
+  border-color: #1d6312;
+  background: var(--xp-start);
+  filter: brightness(1.08);
+}
+
+/* A window: glossy blue title bar over a white pane. */
+.xp-window {
+  overflow: hidden;
+  border: 1px solid #1f5fc8;
+  border-radius: 8px 8px 6px 6px;
+  background: linear-gradient(#ffffff, #eaf3fc);
+  box-shadow: 0 24px 48px -24px rgb(8 36 90 / 0.6), inset 0 0 0 1px rgb(255 255 255 / 0.9);
+}
+
+.xp-window__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  height: 2rem;
+  padding: 0 var(--sp-2) 0 var(--sp-3);
+  background: var(--xp-title);
+  color: #fff;
+  font: 700 0.8125rem/1 "Trebuchet MS", Tahoma, var(--font-sans);
+  text-shadow: 0 1px 1px rgb(0 0 40 / 0.6);
+  white-space: nowrap;
+}
+.xp-window__bar > span:first-child { overflow: hidden; text-overflow: ellipsis; }
+
+.xp-window__controls { display: flex; flex-shrink: 0; gap: 3px; }
+.xp-window__controls i {
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  background: linear-gradient(#6cb0f5, #2a6fdc);
+  font-size: 0.8125rem;
+  font-style: normal;
+}
+.xp-window__controls i::before { content: "\2013"; }                /* minimize */
+.xp-window__controls i:nth-child(2)::before { content: "\25A1"; }  /* maximize */
+.xp-window__controls i:nth-child(3) { background: linear-gradient(#ee8a66, #c9431f); }
+.xp-window__controls i:nth-child(3)::before { content: "\00D7"; }  /* close */
+
+.xp-window__body { padding: clamp(var(--sp-6), 4vw, var(--sp-8)); }
+
+@media (max-width: 30rem) {
+  .xp-window__body { padding: var(--sp-6) var(--sp-4); }
+}
+
+
 /* 8. About / contact ------------------------------------------------------- */
 
 .prose {
@@ -1192,7 +1296,7 @@ svg {
 }
 
 @media print {
-  .site-header, .hero__actions, .hero__index, .rail, .chapter__visual { display: none; }
+  .site-header, .hero__actions, .hero__index, .rail, .chapter__visual, .xp-window__bar { display: none; }
   body { background: #fff; color: #000; }
   .chapter {
     --text: #000; --text-muted: #333; --text-faint: #555; --accent: #000;

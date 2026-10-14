@@ -22,7 +22,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/favicon.svg?v=20261009" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css?v=20261009">
+<link rel="stylesheet" href="styles.css?v=20261013">
 
 <!-- Controls the browser UI color on mobile Safari/Chrome — matches --bg. -->
 <meta name="theme-color" content="#faf6f0">
@@ -55,6 +55,7 @@
     <li><a href="#castle"><span class="rail__dot"></span><span class="rail__label">castle+</span></a></li>
     <li><a href="#bstd"><span class="rail__dot"></span><span class="rail__label">b-standard</span></a></li>
     <li><a href="#swiftsearch"><span class="rail__dot"></span><span class="rail__label">SwiftSearch</span></a></li>
+    <li><a href="#bowlstreet"><span class="rail__dot"></span><span class="rail__label">Bowl Street Journal</span></a></li>
   </ol>
 </nav>
 
@@ -102,6 +103,7 @@
           <li><a href="#castle"><span>03</span> castle+</a></li>
           <li><a href="#bstd"><span>04</span> b-standard</a></li>
           <li><a href="#swiftsearch"><span>05</span> SwiftSearch</a></li>
+          <li><a href="#bowlstreet"><span>06</span> Bowl Street Journal</a></li>
         </ol>
       </nav>
     </div>
@@ -114,7 +116,7 @@
        on its own .chapter--x class (see section 7 of styles.css), so the
        shared .link / .tags / .btn pick up its palette automatically.
        To add one: copy a <section class="chapter"> block, give it a new
-       .chapter--x modifier and id, add a rail link, and bump the "/ 05"s.
+       .chapter--x modifier and id, add a rail link, and bump the "/ 06"s.
        Order matters. Strongest project first.
        ============================================================ -->
   <div class="chapters" id="projects">
@@ -124,7 +126,7 @@
     <section class="chapter chapter--emu" id="emulator" aria-labelledby="emulator-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>01</span> / 05 <span class="chapter__year">2025–2026</span></p>
+          <p class="chapter__index"><span>01</span> / 06 <span class="chapter__year">2025–2026</span></p>
           <h3 class="chapter__title" id="emulator-title">CPU Emulator</h3>
           <p class="chapter__body">
             My first real Rust project that has a custom instruction set, that I call EM
@@ -184,7 +186,7 @@
     <section class="chapter chapter--agil" id="agil" aria-labelledby="agil-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>02</span> / 05 <span class="chapter__year">2026</span></p>
+          <p class="chapter__index"><span>02</span> / 06 <span class="chapter__year">2026</span></p>
           <h3 class="chapter__title" id="agil-title">Agil</h3>
           <p class="chapter__body">
             This is my first production app that I ever built! It features a Rust backend and Swift
@@ -227,7 +229,7 @@
     <section class="chapter chapter--castle" id="castle" aria-labelledby="castle-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>03</span> / 05 <span class="chapter__year">2026</span></p>
+          <p class="chapter__index"><span>03</span> / 06 <span class="chapter__year">2026</span></p>
           <h3 class="chapter__title" id="castle-title">castle+</h3>
           <p class="chapter__body">
             castle+ is a from-scratch C++ reverse proxy and process supervisor built directly on <code>epoll</code>
@@ -304,7 +306,7 @@
     <section class="chapter chapter--bstd" id="bstd" aria-labelledby="bstd-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>04</span> / 05 <span class="chapter__year">2025</span></p>
+          <p class="chapter__index"><span>04</span> / 06 <span class="chapter__year">2025</span></p>
           <h3 class="chapter__title" id="bstd-title">b-standard</h3>
           <p class="chapter__body">
             This is my go-to library for when I build anything that I believe is reusable in other projects,
@@ -346,7 +348,7 @@
     <section class="chapter chapter--swift" id="swiftsearch" aria-labelledby="swiftsearch-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>05</span> / 05 <span class="chapter__year">2025</span></p>
+          <p class="chapter__index"><span>05</span> / 06 <span class="chapter__year">2025</span></p>
           <h3 class="chapter__title" id="swiftsearch-title">SwiftSearch</h3>
           <p class="chapter__body">
             My first big project I ever did, mainly to help me learn multithread design
@@ -386,6 +388,52 @@
             <li><span>corpus/file_0193.txt:42:</span> …found the <b>needle</b> in line…</li>
             <li><span>corpus/file_0388.txt:7:</span> …another <b>needle</b> here…</li>
           </ol>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ---------- 06 Bowl Street Journal ---------- -->
+    <section class="chapter chapter--bsj" id="bowlstreet" aria-labelledby="bowlstreet-title">
+      <div class="wrap chapter__grid">
+        <!-- The text sits in a window like the app's own panels. The title bar
+             is decoration; the real heading is the h3 below it. -->
+        <div class="chapter__text xp-window">
+          <div class="xp-window__bar" aria-hidden="true">
+            <span>Bowl Street Journal</span>
+            <span class="xp-window__controls"><i></i><i></i><i></i></span>
+          </div>
+          <div class="xp-window__body">
+            <p class="chapter__index"><span>06</span> / 06 <span class="chapter__year">2026</span></p>
+            <h3 class="chapter__title" id="bowlstreet-title">Bowl Street Journal</h3>
+            <p class="chapter__body">
+              Our team's HackNC 2026 project: a budgeting app for college students, dressed up as a
+              Windows XP desktop. Gill Gates, a goldfish AI assistant built on Gemini, answers questions
+              about your accounts and spending, out loud if you want. He can only read your money data
+              with your permission, and he can never change it.
+            </p>
+            <p class="chapter__note">
+              <span class="status-dot" aria-hidden="true"></span>
+              Live on my home server, behind castle+.
+            </p>
+            <ul class="tags" aria-label="Technologies used">
+              <li>React</li>
+              <li>FastAPI</li>
+              <li>SQLite</li>
+              <li>Gemini</li>
+              <li>ElevenLabs</li>
+            </ul>
+            <div class="chapter__links">
+              <a class="btn btn--primary" href="projects/bowlstreetjournal/">
+                Open Bowl Street Journal
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="link" href="https://github.com/zacharyz1234/Hack-NC-2026">
+                Source
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
