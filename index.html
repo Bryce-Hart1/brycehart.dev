@@ -6,7 +6,7 @@
 
 <!-- TODO: Replace with your real tagline. This shows up in Google results and on the browser tab. -->
 <title>Bryce Hart — Software Developer</title>
-<meta name="description" content="My name is Bryce, I'm a software developer who builds low-level systems"> <!--REFINE-->
+<meta name="description" content="Bryce Hart, a CS senior at East Carolina University who builds systems software in C++ and Rust.">
 <meta name="author" content="Bryce Hart">
 
 <!-- TODO: Once you have a domain, set it here and in og:url. Delete these two lines if you never get one. -->
@@ -15,14 +15,14 @@
 <!-- Open Graph: controls the preview card when your link is pasted into Slack, LinkedIn, iMessage, etc. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bryce Hart — Software Developer">
-<meta property="og:description" content="My name is Bryce, I'm a software developer who builds low-level systems">
+<meta property="og:description" content="Bryce Hart, a CS senior at East Carolina University who builds systems software in C++ and Rust.">
 <meta property="og:url" content="https://brycehart.dev/">
 <!-- TODO: Add assets/og-image.png (1200x630) for a proper link preview, then uncomment. -->
 <!-- <meta property="og:image" content="https://brycehart.dev/assets/og-image.png"> -->
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/favicon.svg?v=20261009" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css?v=20261013">
+<link rel="stylesheet" href="styles.css?v=20261015">
 
 <!-- Controls the browser UI color on mobile Safari/Chrome — matches --bg. -->
 <meta name="theme-color" content="#faf6f0">
@@ -46,24 +46,8 @@
   </nav>
 </header>
 
-<!-- Chapter rail: wide screens only, and only once main.js has wired it up
-     (it stays display:none without the data-ready attribute). -->
-<nav class="rail" aria-label="Project chapters" data-rail>
-  <ol>
-    <li><a href="#emulator"><span class="rail__dot"></span><span class="rail__label">CPU Emulator</span></a></li>
-    <li><a href="#agil"><span class="rail__dot"></span><span class="rail__label">Agil</span></a></li>
-    <li><a href="#castle"><span class="rail__dot"></span><span class="rail__label">castle+</span></a></li>
-    <li><a href="#bstd"><span class="rail__dot"></span><span class="rail__label">b-standard</span></a></li>
-    <li><a href="#swiftsearch"><span class="rail__dot"></span><span class="rail__label">SwiftSearch</span></a></li>
-    <li><a href="#bowlstreet"><span class="rail__dot"></span><span class="rail__label">Bowl Street Journal</span></a></li>
-  </ol>
-</nav>
-
 <main id="main">
 
-  <!-- ============================================================
-       HERO — the first thing a recruiter reads. Keep it short.
-       ============================================================ -->
   <section class="hero" id="top">
     <div class="wrap">
       <p class="hero__eyebrow">
@@ -73,18 +57,12 @@
       </p>
 
       <h1 class="hero__title">
-        <!-- TODO: Rewrite this. One line, plain language, no buzzwords.
-             Say what you build and what you care about. Examples:
-               "I build low-level systems — emulators, kernels, and the tools around them."
-               "Computer science student who likes making computers do things they weren't supposed to." -->
         I build <em>low-level systems</em> and the tools that make them usable.
       </h1>
 
       <p class="hero__lede">
-        <!-- TODO: Two or three sentences. Who you are, what you're studying or doing now,
-             and what kind of work you want next. Write it like you'd say it out loud. -->
-          My name is Bryce, I'm a senior at East Carolina University. I have a passion for low-level design
-          and data storage.
+        I’m Bryce, a CS senior at East Carolina University. I work in C++ and Rust on systems problems like concurrency, 
+        networking, and storage.
       </p>
 
       <div class="hero__actions">
@@ -98,12 +76,12 @@
 
       <nav class="hero__index" aria-label="Projects">
         <ol>
-          <li><a href="#emulator"><span>01</span> CPU Emulator</a></li>
-          <li><a href="#agil"><span>02</span> Agil</a></li>
-          <li><a href="#castle"><span>03</span> castle+</a></li>
-          <li><a href="#bstd"><span>04</span> b-standard</a></li>
+          <li><a href="#castle"><span>01</span> castle+</a></li>
+          <li><a href="#bowlstreet"><span>02</span> Bowl Street Journal</a></li>
+          <li><a href="#emulator"><span>03</span> CPU Emulator</a></li>
+          <li><a href="#agil"><span>04</span> Agil</a></li>
           <li><a href="#swiftsearch"><span>05</span> SwiftSearch</a></li>
-          <li><a href="#bowlstreet"><span>06</span> Bowl Street Journal</a></li>
+          <li><a href="#bstd"><span>06</span> b-standard</a></li>
         </ol>
       </nav>
     </div>
@@ -111,132 +89,30 @@
 
 
   <!-- ============================================================
-       PROJECTS — one full-width chapter per project.
-       Each chapter restyles itself by overriding the color/type tokens
+       PROJECTS — one rounded tile per project, three to a row.
+       Each tile restyles itself by overriding the color/type tokens
        on its own .chapter--x class (see section 7 of styles.css), so the
        shared .link / .tags / .btn pick up its palette automatically.
        To add one: copy a <section class="chapter"> block, give it a new
-       .chapter--x modifier and id, add a rail link, and bump the "/ 06"s.
+       .chapter--x modifier and id, and bump the "/ 06"s.
        Order matters. Strongest project first.
        ============================================================ -->
   <div class="chapters" id="projects">
     <h2 class="visually-hidden">Projects</h2>
 
-    <!-- ---------- 01 CPU Emulator ---------- -->
-    <section class="chapter chapter--emu" id="emulator" aria-labelledby="emulator-title">
-      <div class="wrap chapter__grid">
-        <div class="chapter__text">
-          <p class="chapter__index"><span>01</span> / 06 <span class="chapter__year">2025–2026</span></p>
-          <h3 class="chapter__title" id="emulator-title">CPU Emulator</h3>
-          <p class="chapter__body">
-            My first real Rust project that has a custom instruction set, that I call EM
-            (Emulator Machine code). It's able to run simple programs step by step over a BIOS
-            layer that I compiled with the assembler, which is also included. This is all displayed
-            in a Raylib window. This is accompanied by a supporting Python app that allows you to write
-            your own programs in EM.
-          </p>
-          <ul class="tags" aria-label="Technologies used">
-            <li>Rust</li>
-            <li>C++</li>
-            <li>Raylib</li>
-            <li>Python</li>
-            <li>Cargo</li>
-          </ul>
-          <div class="chapter__links">
-            <a class="link" href="https://github.com/Bryce-Hart1/CPU_Emulator">
-              Source
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Decorative: a register panel and a listing whose highlight steps
-             down one instruction at a time, the PC counting along with it. -->
-        <div class="chapter__visual emu" aria-hidden="true">
-          <div class="emu__bar">
-            <span>em-vm</span>
-            <span>RUN · STEP</span>
-          </div>
-          <div class="emu__body">
-            <dl class="emu__regs">
-              <div><dt>PC</dt><dd class="emu__pc"></dd></div>
-              <div><dt>ACC</dt><dd>0x002A</dd></div>
-              <div><dt>SP</dt><dd>0x0FF0</dd></div>
-              <div><dt>FLAGS</dt><dd>Z&middot;C&middot;<b>N</b></dd></div>
-            </dl>
-            <!-- TODO: swap in real EM instructions from the CPU_Emulator repo. -->
-            <ol class="emu__listing">
-              <li><span>0000</span>LOAD  R0, #0x10</li>
-              <li><span>0001</span>LOAD  R1, #0x01</li>
-              <li><span>0002</span>ADD   R0, R1</li>
-              <li><span>0003</span>STORE R0, [0x80]</li>
-              <li><span>0004</span>CMP   R0, #0x20</li>
-              <li><span>0005</span>JNE   0x0002</li>
-              <li><span>0006</span>CALL  BIOS_PUTC</li>
-              <li><span>0007</span>HALT</li>
-            </ol>
-          </div>
-          <p class="emu__prompt">&gt; step<span class="emu__cursor"></span></p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ---------- 02 Agil ---------- -->
-    <section class="chapter chapter--agil" id="agil" aria-labelledby="agil-title">
-      <div class="wrap chapter__grid">
-        <div class="chapter__text">
-          <p class="chapter__index"><span>02</span> / 06 <span class="chapter__year">2026</span></p>
-          <h3 class="chapter__title" id="agil-title">Agil</h3>
-          <p class="chapter__body">
-            This is my first production app that I ever built! It features a Rust backend and Swift
-            frontend. I was tired of all these fitness apps locking features of their apps behind paywalls.
-            So I built my own. No paywalls or monthly subscriptions.
-          </p>
-          <ul class="tags" aria-label="Technologies used">
-            <li>Swift</li>
-            <li>Rust</li>
-            <li>Python</li>
-            <li>Open Food Facts</li>
-          </ul>
-          <div class="chapter__links">
-            <a class="btn btn--primary" href="agil/">
-              Visit the Agil site
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-            </a>
-            <a class="link" href="https://github.com/Bryce-Hart1/Agil_app">
-              Source
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Decorative: the progress screen in a phone frame, with three of
-             the rank cards fanned out behind it. -->
-        <div class="chapter__visual agil-stage" aria-hidden="true">
-          <img class="agil-stage__card agil-stage__card--1" src="assets/agil/cards/card-squire.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
-          <img class="agil-stage__card agil-stage__card--2" src="assets/agil/cards/card-gladiator.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
-          <img class="agil-stage__card agil-stage__card--3" src="assets/agil/cards/card-legend.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
-          <div class="agil-stage__phone">
-            <img src="assets/agil/shots/shot-progress.jpg" alt="" width="600" height="1298" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ---------- 03 castle+ ---------- -->
+    <!-- ---------- 01 castle+ ---------- -->
     <section class="chapter chapter--castle" id="castle" aria-labelledby="castle-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>03</span> / 06 <span class="chapter__year">2026</span></p>
+          <p class="chapter__index"><span>01</span> / 06 <span class="chapter__year">2026</span></p>
           <h3 class="chapter__title" id="castle-title">castle+</h3>
+          <!-- TODO: add one number, e.g. "It has served ___ requests since ___."
+               or "It handles ___ requests/sec in under ___ MB of memory." -->
           <p class="chapter__body">
-            castle+ is a from-scratch C++ reverse proxy and process supervisor built directly on <code>epoll</code>
-            that terminates TLS, routes HTTP traffic to backend services it launches and health-checks itself,
-            and streams request bodies of any size with bounded memory. It includes production-grade hardening like per-IP rate limiting,
-            live certificate reloads, and a Unix-socket admin control plane, and runs today on my home server on my
-            Lenovo ThinkCentre.
+            A reverse proxy and process supervisor I wrote from scratch in C++ on <code>epoll</code>.
+            It terminates TLS, launches and health-checks the services behind it, and streams request
+            bodies of any size in bounded memory. It also handles per-IP rate limiting, live certificate
+            reloads, and admin commands over a Unix socket.
           </p>
           <p class="chapter__note">
             <span class="status-dot" aria-hidden="true"></span>
@@ -302,43 +178,154 @@
     </section>
 
 
-    <!-- ---------- 04 b-standard ---------- -->
-    <section class="chapter chapter--bstd" id="bstd" aria-labelledby="bstd-title">
+    <!-- ---------- 02 Bowl Street Journal ---------- -->
+    <section class="chapter chapter--bsj" id="bowlstreet" aria-labelledby="bowlstreet-title">
+      <div class="wrap chapter__grid">
+        <!-- Sits on the sky, outside the window, so it lines up with the
+             other tiles' index lines. -->
+        <p class="chapter__index"><span>02</span> / 06 <span class="chapter__year">2026</span></p>
+        <!-- The text sits in a window like the app's own panels. The title bar
+             is decoration; the real heading is the h3 below it. -->
+        <div class="chapter__text xp-window">
+          <div class="xp-window__bar" aria-hidden="true">
+            <span>Bowl Street Journal</span>
+            <span class="xp-window__controls"><i></i><i></i><i></i></span>
+          </div>
+          <div class="xp-window__body">
+            <h3 class="chapter__title" id="bowlstreet-title">Bowl Street Journal</h3>
+            <!-- TODO: add one sentence on your part of the team's work, e.g.
+                 "I built ___ and ___." Recruiters reading a team project look for this first. -->
+            <p class="chapter__body">
+              Our team's winning HackNC 2026 project: a budgeting game for college students, built around
+              the hackathon's Frutiger Aero theme. Its assistant, Gill Gates, is a goldfish built on Gemini who answers
+              questions about your accounts and spending, out loud if you want. He can read your money
+              data only with your permission, and he can never change it directly.
+            </p>
+            <p class="chapter__note">
+              <span class="status-dot" aria-hidden="true"></span>
+              Live on my home server, behind castle+.
+            </p>
+            <ul class="tags" aria-label="Technologies used">
+              <li>React</li>
+              <li>FastAPI</li>
+              <li>SQLite</li>
+              <li>Gemini</li>
+              <li>ElevenLabs</li>
+            </ul>
+            <div class="chapter__links">
+              <a class="btn btn--primary" href="projects/bowlstreetjournal/">
+                Open Bowl Street Journal
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="link" href="https://github.com/zacharyz1234/Hack-NC-2026">
+                Source
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ---------- 03 CPU Emulator ---------- -->
+    <section class="chapter chapter--emu" id="emulator" aria-labelledby="emulator-title">
       <div class="wrap chapter__grid">
         <div class="chapter__text">
-          <p class="chapter__index"><span>04</span> / 06 <span class="chapter__year">2025</span></p>
-          <h3 class="chapter__title" id="bstd-title">b-standard</h3>
+          <p class="chapter__index"><span>03</span> / 06 <span class="chapter__year">2025–2026</span></p>
+          <h3 class="chapter__title" id="emulator-title">CPU Emulator</h3>
+          <!-- TODO: add one number, e.g. "EM has ___ instructions and ___ registers." -->
           <p class="chapter__body">
-            This is my go-to library for when I build anything that I believe is reusable in other projects,
-            or I feel like learning how a real system or library works. Includes pieces of ASM, C++, C and
-            Rust.
+            A CPU emulator in Rust with its own instruction set, EM (Emulator Machine code), and an
+            assembler to go with it. Programs run step by step on a BIOS built with that assembler,
+            shown live in a Raylib window. A companion Python app lets you write your own EM programs.
           </p>
           <ul class="tags" aria-label="Technologies used">
             <li>Rust</li>
             <li>C++</li>
-            <li>C</li>
-            <li>ASM</li>
+            <li>Raylib</li>
+            <li>Python</li>
+            <li>Cargo</li>
           </ul>
           <div class="chapter__links">
-            <a class="link" href="https://github.com/Bryce-Hart1/bstd">
+            <a class="link" href="https://github.com/Bryce-Hart1/CPU_Emulator">
               Source
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
           </div>
         </div>
 
-        <!-- Decorative: the library as a man page. -->
-        <div class="chapter__visual man" aria-hidden="true">
-          <div class="man__rule"><span>BSTD(3)</span><span>Library Functions Manual</span><span>BSTD(3)</span></div>
-          <p class="man__h">NAME</p>
-          <p class="man__p"><b>bstd</b> — the pieces worth writing once and reusing everywhere</p>
-          <p class="man__h">SYNOPSIS</p>
-          <p class="man__p man__code">use bstd::*;<br>#include &lt;bstd.h&gt;<span class="man__cursor"></span></p>
-          <p class="man__h">DESCRIPTION</p>
-          <p class="man__p">Reusable building blocks, and from-scratch rebuilds of real systems and libraries to learn how they work.</p>
-          <p class="man__h">LANGUAGES</p>
-          <p class="man__p">Rust, C++, C, assembly.</p>
-          <div class="man__rule man__rule--foot"><span>brycehart.dev</span><span>2025</span><span>BSTD(3)</span></div>
+        <!-- Decorative: a register panel and a listing whose highlight steps
+             down one instruction at a time, the PC counting along with it. -->
+        <div class="chapter__visual emu" aria-hidden="true">
+          <div class="emu__bar">
+            <span>em-vm</span>
+            <span>RUN · STEP</span>
+          </div>
+          <div class="emu__body">
+            <dl class="emu__regs">
+              <div><dt>PC</dt><dd class="emu__pc"></dd></div>
+              <div><dt>ACC</dt><dd>0x002A</dd></div>
+              <div><dt>SP</dt><dd>0x0FF0</dd></div>
+              <div><dt>FLAGS</dt><dd>Z&middot;C&middot;<b>N</b></dd></div>
+            </dl>
+            <!-- TODO: swap in real EM instructions from the CPU_Emulator repo. -->
+            <ol class="emu__listing">
+              <li><span>0000</span>LOAD  R0, #0x10</li>
+              <li><span>0001</span>LOAD  R1, #0x01</li>
+              <li><span>0002</span>ADD   R0, R1</li>
+              <li><span>0003</span>STORE R0, [0x80]</li>
+              <li><span>0004</span>CMP   R0, #0x20</li>
+              <li><span>0005</span>JUMP   0x0002</li>
+              <li><span>0006</span>CALL  BIOS</li>
+              <li><span>0007</span>HALT</li>
+            </ol>
+          </div>
+          <p class="emu__prompt">&gt; step<span class="emu__cursor"></span></p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ---------- 04 Agil ---------- -->
+    <section class="chapter chapter--agil" id="agil" aria-labelledby="agil-title">
+      <div class="wrap chapter__grid">
+        <div class="chapter__text">
+          <p class="chapter__index"><span>04</span> / 06 <span class="chapter__year">2026</span></p>
+          <h3 class="chapter__title" id="agil-title">Agil</h3>
+          <!-- TODO: add one number, e.g. "___ people use it" or "It tracks ___ foods from Open Food Facts." -->
+          <p class="chapter__body">
+            A workout and nutrition tracker I designed, built and shipped to production, with a Swift
+            frontend and a Rust backend. Most fitness apps lock their best features behind a subscription.
+            Agil has no paywalls and no monthly fee.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>Swift</li>
+            <li>Rust</li>
+            <li>Python</li>
+            <li>Open Food Facts</li>
+          </ul>
+          <div class="chapter__links">
+            <a class="btn btn--primary" href="agil/">
+              Visit the Agil site
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="link" href="https://github.com/Bryce-Hart1/Agil_app">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Decorative: the progress screen in a phone frame, with three of
+             the rank cards fanned out behind it. -->
+        <div class="chapter__visual agil-stage" aria-hidden="true">
+          <img class="agil-stage__card agil-stage__card--1" src="assets/agil/cards/card-squire.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
+          <img class="agil-stage__card agil-stage__card--2" src="assets/agil/cards/card-gladiator.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
+          <img class="agil-stage__card agil-stage__card--3" src="assets/agil/cards/card-legend.jpg" alt="" width="480" height="793" loading="lazy" decoding="async">
+          <div class="agil-stage__phone">
+            <img src="assets/agil/shots/shot-progress.jpg" alt="" width="600" height="1298" loading="lazy" decoding="async">
+          </div>
         </div>
       </div>
     </section>
@@ -393,47 +380,44 @@
     </section>
 
 
-    <!-- ---------- 06 Bowl Street Journal ---------- -->
-    <section class="chapter chapter--bsj" id="bowlstreet" aria-labelledby="bowlstreet-title">
+    <!-- ---------- 06 b-standard ---------- -->
+    <section class="chapter chapter--bstd" id="bstd" aria-labelledby="bstd-title">
       <div class="wrap chapter__grid">
-        <!-- The text sits in a window like the app's own panels. The title bar
-             is decoration; the real heading is the h3 below it. -->
-        <div class="chapter__text xp-window">
-          <div class="xp-window__bar" aria-hidden="true">
-            <span>Bowl Street Journal</span>
-            <span class="xp-window__controls"><i></i><i></i><i></i></span>
+        <div class="chapter__text">
+          <p class="chapter__index"><span>06</span> / 06 <span class="chapter__year">2025</span></p>
+          <h3 class="chapter__title" id="bstd-title">b-standard</h3>
+          <!-- TODO: name two or three specific things in it, e.g. "Includes my own ___, ___ and ___." -->
+          <p class="chapter__body">
+            My personal standard library: reusable pieces I pull into other projects, and from-scratch
+            rebuilds of real systems and libraries so I can learn how they work. Written in C, C++, Rust
+            and assembly.
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li>Rust</li>
+            <li>C++</li>
+            <li>C</li>
+            <li>ASM</li>
+          </ul>
+          <div class="chapter__links">
+            <a class="link" href="https://github.com/Bryce-Hart1/bstd">
+              Source
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
           </div>
-          <div class="xp-window__body">
-            <p class="chapter__index"><span>06</span> / 06 <span class="chapter__year">2026</span></p>
-            <h3 class="chapter__title" id="bowlstreet-title">Bowl Street Journal</h3>
-            <p class="chapter__body">
-              Our team's HackNC 2026 project: a budgeting app for college students, dressed up as a
-              Windows XP desktop. Gill Gates, a goldfish AI assistant built on Gemini, answers questions
-              about your accounts and spending, out loud if you want. He can only read your money data
-              with your permission, and he can never change it.
-            </p>
-            <p class="chapter__note">
-              <span class="status-dot" aria-hidden="true"></span>
-              Live on my home server, behind castle+.
-            </p>
-            <ul class="tags" aria-label="Technologies used">
-              <li>React</li>
-              <li>FastAPI</li>
-              <li>SQLite</li>
-              <li>Gemini</li>
-              <li>ElevenLabs</li>
-            </ul>
-            <div class="chapter__links">
-              <a class="btn btn--primary" href="projects/bowlstreetjournal/">
-                Open Bowl Street Journal
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-              </a>
-              <a class="link" href="https://github.com/zacharyz1234/Hack-NC-2026">
-                Source
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </a>
-            </div>
-          </div>
+        </div>
+
+        <!-- Decorative: the library as a man page. -->
+        <div class="chapter__visual man" aria-hidden="true">
+          <div class="man__rule"><span>BSTD(3)</span><span>Library Functions Manual</span><span>BSTD(3)</span></div>
+          <p class="man__h">NAME</p>
+          <p class="man__p"><b>bstd</b> — the pieces worth writing once and reusing everywhere</p>
+          <p class="man__h">SYNOPSIS</p>
+          <p class="man__p man__code">use bstd::*;<br>#include &lt;bstd.h&gt;<span class="man__cursor"></span></p>
+          <p class="man__h">DESCRIPTION</p>
+          <p class="man__p">Reusable building blocks, and from-scratch rebuilds of real systems and libraries to learn how they work.</p>
+          <p class="man__h">LANGUAGES</p>
+          <p class="man__p">Rust, C++, C, assembly.</p>
+          <div class="man__rule man__rule--foot"><span>brycehart.dev</span><span>2025</span><span>BSTD(3)</span></div>
         </div>
       </div>
     </section>
@@ -461,7 +445,8 @@
         <p>
           When I was younger, I wanted to work on video games. Then I learned to program and realized how wide the world of software really is. 
           I still love games, but these days I find myself building projects that solve problems I run into day to day. I also love teaching people to program.
-          I help coach ECU's Coding Club, and even with AI around, I think it's a skill everyone can benefit from.
+          I help coach ECU's Coding Club, and even with AI around, I think it's a skill everyone can benefit from. I'm also ACM@ECU's treasurer and I help manage
+          budgets for Hackatons and networking events.
         </p>
         <p>
           Outside of Computer Science, I love going to the gym, hanging out with my friends and working on my car. Some of my favorite games right now are 
@@ -469,8 +454,6 @@
         </p>
       </div>
 
-      <!-- TODO: Trim this to what you'd be comfortable being interviewed on.
-           A short honest list reads better than an exhaustive one. -->
       <div class="toolbox">
         <h3 class="toolbox__title">Working with</h3>
         <ul class="tags tags--lg">
@@ -528,6 +511,6 @@
   </div>
 </footer>
 
-<script src="main.js?v=20261009"></script>
+<script src="main.js?v=20261015"></script>
 </body>
 </html>

@@ -55,6 +55,7 @@
   --sp-24: 6rem;
 
   --radius: 10px;
+  --radius-lg: 22px;
   --radius-sm: 6px;
 
   /* Shadows are tinted with the midnight from --text, never pure black. Pure
@@ -63,7 +64,7 @@
   --shadow-lift: 0 2px 4px rgb(18 26 51 / 0.06), 0 12px 32px -10px rgb(18 26 51 / 0.20);
 
   --measure: 68ch;   /* comfortable reading width */
-  --page: 1080px;    /* max content width */
+  --page: 1200px;    /* max content width */
 }
 
 /* The page ships one palette, always. Tell the browser so it doesn't render form
@@ -357,39 +358,55 @@ svg {
 
 /* 7. Project chapters ------------------------------------------------------ */
 
-/* Each project is a full-bleed chapter. A chapter restyles itself by
-   redefining the section 1 tokens on its .chapter--x class (7a–7f below), so
-   .link, .tags, .btn and the focus ring all wear its palette for free. Every
-   chapter palette keeps body text and links at 4.5:1 or better on its --bg. */
+/* Each project is a rounded tile in a 3-column grid, with the page's cream
+   showing in the gutters between them. A tile restyles itself by redefining
+   the section 1 tokens on its .chapter--x class (7a–7f below), so .link,
+   .tags, .btn and the focus ring all wear its palette for free. Every tile
+   palette keeps body text and links at 4.5:1 or better on its --bg. */
+
+.chapters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-6);
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--sp-6);
+}
+
+@media (max-width: 68rem) {
+  .chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 44rem) {
+  .chapters { grid-template-columns: minmax(0, 1fr); padding-inline: var(--sp-4); }
+}
 
 .chapter {
   --font-display: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   background: var(--bg);
   color: var(--text);
-  padding-block: clamp(var(--sp-16), 10vw, 7rem);
-  overflow: clip;            /* the fanned Agil cards may poke past the edge */
+  box-shadow: var(--shadow);
+  overflow: clip;            /* the Agil phone and cards run past the edge */
 }
 
+/* Text on top, visual pinned to the bottom, so titles line up across a row. */
 .chapter__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: clamp(var(--sp-8), 6vw, var(--sp-16));
-  align-items: center;
-}
-
-/* Alternate sides so the page zig-zags instead of stacking the same shape. */
-.chapter:nth-of-type(even) .chapter__text { order: 2; }
-
-@media (max-width: 52rem) {
-  .chapter__grid { grid-template-columns: minmax(0, 1fr); }
-  .chapter:nth-of-type(even) .chapter__text { order: 0; }
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--sp-6);
+  padding-inline: 0;
 }
 
 .chapter__index {
-  margin-bottom: var(--sp-4);
+  margin-bottom: var(--sp-3);
   color: var(--text-faint);
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
 }
 .chapter__index > span:first-child { color: var(--accent); font-weight: 600; }
 
@@ -400,16 +417,15 @@ svg {
 }
 
 .chapter__title {
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-4);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
 }
 
 .chapter__body {
-  max-width: 54ch;
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-4);
   color: var(--text-muted);
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
 }
 .chapter__body code {
   padding: 0.05em 0.35em;
@@ -424,21 +440,22 @@ svg {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-4);
   color: var(--text);
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
 }
 
 .chapter__links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--sp-6);
-  margin-top: var(--sp-6);
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
 }
+.chapter .btn { padding: var(--sp-2) var(--sp-4); font-size: 0.875rem; }
 
-.chapter__visual { min-width: 0; }
+.chapter__visual { min-width: 0; margin-top: auto; }
 
 .chapters__foot {
   padding-block: var(--sp-12);
@@ -491,75 +508,6 @@ svg {
 @keyframes blink { to { visibility: hidden; } }
 
 
-/* Chapter rail — fixed dots on the left edge. Only on screens wide enough to
-   have a margin for it, and only once main.js sets data-ready (it then fades
-   in while a chapter is in view, via data-active). */
-.rail { display: none; }
-
-@media (min-width: 80rem) {
-  .rail[data-ready] {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: var(--sp-6);
-    z-index: 40;
-    transform: translateY(-50%);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, visibility 0.25s;
-  }
-  .rail[data-active] { opacity: 1; visibility: visible; }
-}
-
-.rail ol {
-  display: grid;
-  gap: var(--sp-1);
-  padding: var(--sp-2);
-  list-style: none;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow);
-}
-
-.rail a {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.rail__dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--border-strong);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.rail a:hover .rail__dot { background: var(--text-muted); }
-.rail a[aria-current] .rail__dot { background: var(--accent); transform: scale(1.4); }
-
-.rail__label {
-  position: absolute;
-  left: calc(100% + var(--sp-3));
-  padding: 0.1rem var(--sp-2);
-  border-radius: var(--radius-sm);
-  background: var(--text);
-  color: var(--bg);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(-4px);
-  pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-.rail a:hover .rail__label,
-.rail a:focus-visible .rail__label { opacity: 1; transform: none; }
-
-
 /* 7a. CPU Emulator — phosphor terminal ------------------------------------ */
 
 .chapter--emu {
@@ -597,7 +545,7 @@ svg {
   box-shadow: 0 30px 60px -30px rgb(255 181 71 / 0.28);
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   animation: emu-step 8s steps(8, end) infinite;
 }
 
@@ -635,8 +583,8 @@ svg {
 .emu__regs {
   display: grid;
   align-content: start;
-  gap: var(--sp-3);
-  padding: var(--sp-4);
+  gap: var(--sp-2);
+  padding: var(--sp-3);
   border-right: 1px solid var(--border);
 }
 .emu__regs dt { color: var(--text-faint); font-size: 0.6875rem; letter-spacing: 0.08em; }
@@ -658,13 +606,13 @@ svg {
   position: relative;
   z-index: 1;
   height: var(--line);
-  padding-inline: var(--sp-4);
+  padding-inline: var(--sp-3);
   overflow: hidden;
   color: var(--text-muted);
   line-height: var(--line);
   white-space: pre;
 }
-.emu__listing span { margin-right: var(--sp-4); color: var(--text-faint); }
+.emu__listing span { margin-right: var(--sp-3); color: var(--text-faint); }
 
 /* The program-counter highlight. */
 .emu__listing::before {
@@ -693,12 +641,6 @@ svg {
   background: var(--accent);
   vertical-align: text-bottom;
   animation: blink 1s steps(2, start) infinite;
-}
-
-@media (max-width: 30rem) {
-  .emu__regs { gap: var(--sp-2); padding: var(--sp-3); }
-  .emu__listing li { padding-inline: var(--sp-3); }
-  .emu__listing span { margin-right: var(--sp-2); }
 }
 
 
@@ -739,14 +681,15 @@ svg {
 .agil-stage {
   display: grid;
   place-items: center;
-  padding-block: var(--sp-6);
+  padding-top: var(--sp-4);
+  margin-bottom: calc(-1 * var(--sp-6) - 7rem);   /* the tile clips the phone's lower half */
 }
 .agil-stage > * { grid-area: 1 / 1; }
 
 .agil-stage__phone {
   position: relative;
   z-index: 2;
-  width: min(15rem, 58%);
+  width: min(11rem, 54%);
   aspect-ratio: 600 / 1298;
   overflow: hidden;
   border: 6px solid var(--text);
@@ -824,21 +767,14 @@ svg {
   fill: var(--text-muted);
   stroke: none;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   text-anchor: middle;
   dominant-baseline: central;
 }
 
 .castle__node--core rect { fill: rgb(95 212 230 / 0.08); stroke: var(--accent); }
-.castle__node--core text { fill: var(--accent); font-size: 14px; font-weight: 600; }
-.castle__map .castle__tls { fill: var(--tls); font-size: 11px; }
-
-/* The diagram scales with its column, so on a phone 12 units is ~8px. */
-@media (max-width: 30rem) {
-  .castle__map text { font-size: 16px; }
-  .castle__node--core text { font-size: 18px; }
-  .castle__map .castle__tls { font-size: 14px; }
-}
+.castle__node--core text { fill: var(--accent); font-size: 18px; font-weight: 600; }
+.castle__map .castle__tls { fill: var(--tls); font-size: 14px; }
 
 /* Packets. Positions are SVG user units; the static transforms are where
    they rest when motion is off. One 3s cycle: a request crosses the TLS hop
@@ -885,7 +821,7 @@ svg {
   border-radius: var(--radius-sm);
   background: rgb(0 0 0 / 0.22);
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   line-height: 1.8;
 }
 .castle__log li { overflow: hidden; text-overflow: ellipsis; white-space: pre; }
@@ -907,18 +843,18 @@ svg {
   --accent:        #1f4aa8;  /* the blue of an old hyperlink */
   --accent-hover:  #163a87;
   --font-display:  ui-serif, "New York", Georgia, "Times New Roman", serif;
-  border-block: 1px solid var(--border);
 }
 .chapter--bstd .chapter__title { font-weight: 500; letter-spacing: -0.01em; }
 
 .man {
-  padding: var(--sp-6) var(--sp-8);
+  margin-right: 8px;          /* room for the offset page shadow */
+  padding: var(--sp-4);
   border: 1px solid var(--border-strong);
   background: var(--surface);
   box-shadow: 8px 8px 0 var(--bg-alt), 8px 8px 0 1px var(--border-strong);
   color: var(--text);
   font-family: var(--font-display);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
@@ -949,7 +885,7 @@ svg {
 }
 .man__rule + .man__h { margin-top: 0; }
 
-.man__p { padding-left: var(--sp-6); color: var(--text-muted); }
+.man__p { padding-left: var(--sp-3); color: var(--text-muted); }
 .man__p b { color: var(--text); }
 .man__code { color: var(--accent); font-family: var(--font-mono); font-size: 0.8125rem; }
 
@@ -963,11 +899,7 @@ svg {
   animation: blink 1.1s steps(2, start) infinite;
 }
 
-@media (max-width: 30rem) {
-  .man { padding: var(--sp-4) var(--sp-4); }
-  .man__p { padding-left: var(--sp-3); }
-  .man__rule span:nth-child(2) { display: none; }
-}
+.man__rule span:nth-child(2) { display: none; }
 
 
 /* 7e. SwiftSearch — parallel thread lanes --------------------------------- */
@@ -1074,12 +1006,12 @@ svg {
 .lanes__out b { color: var(--accent); font-weight: 600; }
 
 
-/* 7f. Bowl Street Journal — the app's Windows XP desktop ------------------ */
+/* 7f. Bowl Street Journal — the app's Frutiger Aero desktop -------------- */
 
 /* Glosses lifted from the app's own stylesheet (--title-gloss, --green-gloss,
-   --sky, --grass). The sky and hills are decoration: all text sits in a
-   near-white window, where ink and links clear 4.5:1. --bg is the sky's
-   midpoint so the mobile browser chrome matches it. */
+   --sky, --grass). The sky and hills are decoration: apart from the white
+   index line on the dark top of the sky, all text sits in a near-white
+   window, where ink and links clear 4.5:1. --bg is the sky's midpoint. */
 .chapter--bsj {
   --bg:            #3a87dc;
   --bg-alt:        #e4eefa;
@@ -1098,13 +1030,20 @@ svg {
     radial-gradient(150% 48% at 22% 104%, #5cb535 0 50%, transparent 52%),
     radial-gradient(120% 40% at 92% 106%, #43a024 0 50%, transparent 52%),
     radial-gradient(28% 10% at 80% 14%, rgb(255 255 255 / 0.6), transparent 70%),
-    radial-gradient(22% 8% at 16% 8%, rgb(255 255 255 / 0.45), transparent 70%),
     linear-gradient(#1d6bd0, #4c97e6 40%, #a6d1f6 72%);
 }
 
-/* No visual here: one window, centered on the desktop. */
-.chapter--bsj .chapter__grid { grid-template-columns: minmax(0, 1fr); justify-items: center; }
-.chapter--bsj .chapter__text { width: 100%; max-width: 40rem; }
+/* No visual here: the index line on the sky, then one window below it. */
+.chapter--bsj .chapter__grid { gap: var(--sp-4); }
+
+/* The index line sits on the dark top of the sky, so it goes white. */
+.chapter--bsj .chapter__grid > .chapter__index {
+  margin-bottom: 0;
+  color: rgb(255 255 255 / 0.9);
+  text-shadow: 0 1px 2px rgb(8 36 90 / 0.5);
+}
+.chapter--bsj .chapter__grid > .chapter__index > span:first-child { color: #fff; }
+.chapter--bsj .chapter__grid > .chapter__index .chapter__year { border-left-color: rgb(255 255 255 / 0.5); }
 
 .chapter--bsj .chapter__title { font-weight: 700; letter-spacing: -0.01em; }
 
@@ -1171,11 +1110,7 @@ svg {
 .xp-window__controls i:nth-child(3) { background: linear-gradient(#ee8a66, #c9431f); }
 .xp-window__controls i:nth-child(3)::before { content: "\00D7"; }  /* close */
 
-.xp-window__body { padding: clamp(var(--sp-6), 4vw, var(--sp-8)); }
-
-@media (max-width: 30rem) {
-  .xp-window__body { padding: var(--sp-6) var(--sp-4); }
-}
+.xp-window__body { padding: var(--sp-6) var(--sp-4); }
 
 
 /* 8. About / contact ------------------------------------------------------- */
@@ -1296,11 +1231,13 @@ svg {
 }
 
 @media print {
-  .site-header, .hero__actions, .hero__index, .rail, .chapter__visual, .xp-window__bar { display: none; }
+  .site-header, .hero__actions, .hero__index, .chapter__visual, .xp-window__bar { display: none; }
+  .chapters { display: block; }
   body { background: #fff; color: #000; }
   .chapter {
     --text: #000; --text-muted: #333; --text-faint: #555; --accent: #000;
     --bg-alt: #fff; --border: #ccc; --border-strong: #999;
     background: #fff; color: #000; padding-block: var(--sp-8); break-inside: avoid;
+    border: 0; border-radius: 0; box-shadow: none;
   }
 }
